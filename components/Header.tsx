@@ -19,15 +19,15 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/98 backdrop-blur supports-[backdrop-filter]:bg-background/95">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-lg shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded bg-primary text-primary-foreground font-bold text-sm">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-primary font-semibold text-sm shadow-sm">
               RG
             </div>
-            <span className="hidden text-lg font-semibold text-primary tracking-tight sm:inline">
+            <span className="hidden text-base font-semibold tracking-[0.18em] uppercase text-foreground sm:inline">
               Royal Gypsum
             </span>
           </Link>
@@ -38,7 +38,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-accent"
               >
                 {link.label}
               </Link>
@@ -51,18 +51,18 @@ export function Header() {
               <>
                 <Link
                   href="/admin"
-                  className="hidden text-sm font-medium text-foreground/80 transition-colors hover:text-primary sm:inline"
+                  className="hidden rounded-full border border-border bg-card/80 px-4 py-2 text-sm font-medium text-foreground transition hover:border-accent hover:text-accent sm:inline"
                 >
                   Dashboard
                 </Link>
-                <div className="flex items-center gap-2 rounded px-3 py-1.5 bg-accent/10">
-                  <span className="text-xs font-semibold text-accent">{userProfile.displayName}</span>
+                <div className="hidden items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-semibold text-foreground sm:flex">
+                  <span>{userProfile.displayName}</span>
                 </div>
               </>
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm font-medium text-muted-foreground transition hover:border-accent hover:text-accent"
               >
                 <LogIn className="h-4 w-4" />
                 <span className="hidden sm:inline">Login</span>
@@ -71,7 +71,7 @@ export function Header() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden"
+              className="md:hidden rounded-full border border-border bg-card/90 p-2 text-foreground transition hover:border-accent"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -92,7 +92,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium transition-colors hover:text-primary"
+                  className="rounded-xl px-4 py-2 text-sm font-medium text-foreground transition hover:bg-accent/10 hover:text-accent"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -101,7 +101,7 @@ export function Header() {
               {user && userProfile && (
                 <Link
                   href="/admin"
-                  className="text-sm font-medium transition-colors hover:text-primary"
+                  className="rounded-xl px-4 py-2 text-sm font-medium text-foreground transition hover:bg-accent/10 hover:text-accent"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Admin Panel

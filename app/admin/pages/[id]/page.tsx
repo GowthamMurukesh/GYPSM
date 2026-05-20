@@ -27,6 +27,7 @@ export default function PageEditor() {
   const params = useParams();
   const router = useRouter();
   const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [page, setPage] = useState<Omit<PageContent, 'id' | 'createdAt' | 'updatedAt'>>(
     defaultPage
   );
@@ -84,6 +85,10 @@ export default function PageEditor() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isViewer) {
+      setError('Viewer access is read-only.');
+      return;
+    }
     setSaving(true);
     setError(null);
 
@@ -121,6 +126,30 @@ export default function PageEditor() {
     );
   }
 
+  if (isViewer && isNew) {
+    return (
+      <div className="space-y-6 max-w-4xl">
+        <div className="flex items-center gap-4">
+          <Link href="/admin/pages">
+            <Button variant="outline" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold">View Page</h1>
+            <p className="text-muted-foreground">Viewer accounts can view page content but cannot create new pages.</p>
+          </div>
+        </div>
+
+        <Card className="p-6">
+          <p className="text-sm text-muted-foreground">
+            This account is read-only. Use the Pages list to view existing content.
+          </p>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
@@ -154,7 +183,7 @@ export default function PageEditor() {
             value={page.slug}
             onChange={handleChange}
             placeholder="about"
-            disabled={!isNew}
+            disabled={!isNew || isViewer}
             required
           />
           <p className="text-xs text-muted-foreground mt-1">
@@ -174,6 +203,7 @@ export default function PageEditor() {
             onChange={handleChange}
             placeholder="Page Title"
             required
+            disabled={isViewer}
           />
         </Card>
 
@@ -188,6 +218,7 @@ export default function PageEditor() {
             value={page.description}
             onChange={handleChange}
             placeholder="Short description for meta tags"
+            disabled={isViewer}
           />
         </Card>
 
@@ -204,6 +235,7 @@ export default function PageEditor() {
             rows={12}
             placeholder="Enter HTML content..."
             className="w-full px-3 py-2 border border-border rounded-md bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring font-mono text-sm"
+            disabled={isViewer}
           />
           <p className="text-xs text-muted-foreground mt-2">
             HTML content is supported
@@ -219,6 +251,7 @@ export default function PageEditor() {
               checked={page.published}
               onChange={handleChange}
               className="rounded"
+              disabled={isViewer}
             />
             <span className="text-sm font-medium">Publish this page</span>
           </label>
@@ -228,10 +261,10 @@ export default function PageEditor() {
         <div className="flex gap-4">
           <Button
             type="submit"
-            disabled={saving}
+            disabled={saving || isViewer}
           >
             <Save className="h-4 w-4 mr-2" />
-            {saving ? 'Saving...' : 'Save Page'}
+            {saving ? 'Saving...' : isViewer ? 'Read-only' : 'Save Page'}
           </Button>
           <Link href="/admin/pages">
             <Button variant="outline">Cancel</Button>

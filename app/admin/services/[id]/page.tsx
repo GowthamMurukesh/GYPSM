@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAuthStore } from '@/lib/authStore';
 import { Service } from '@/lib/types';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -26,6 +27,8 @@ const defaultService: Omit<Service, 'id' | 'createdAt' | 'updatedAt'> = {
 export default function ServiceEditor() {
   const params = useParams();
   const router = useRouter();
+  const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [service, setService] = useState<Omit<Service, 'id' | 'createdAt' | 'updatedAt'>>(
     defaultService
   );
@@ -84,6 +87,10 @@ export default function ServiceEditor() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isViewer) {
+      setError('Viewer access is read-only.');
+      return;
+    }
     setSaving(true);
     setError(null);
 
@@ -160,6 +167,7 @@ export default function ServiceEditor() {
             onChange={handleChange}
             placeholder="e.g., Interior Plastering"
             required
+            disabled={isViewer}
           />
         </Card>
 
@@ -175,6 +183,7 @@ export default function ServiceEditor() {
             rows={3}
             placeholder="Brief description for service cards"
             className="w-full px-3 py-2 border border-border rounded-md bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            disabled={isViewer}
           />
         </Card>
 
@@ -190,6 +199,7 @@ export default function ServiceEditor() {
             rows={6}
             placeholder="Detailed information about the service"
             className="w-full px-3 py-2 border border-border rounded-md bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            disabled={isViewer}
           />
         </Card>
 
@@ -206,8 +216,8 @@ export default function ServiceEditor() {
             id="image"
             type="file"
             accept="image/*"
-            onChange={(e) => handleImageUpload(e.target.files?.[0])}
-            disabled={saving}
+            onChange={(e) => !isViewer && handleImageUpload(e.target.files?.[0])}
+            disabled={saving || isViewer}
           />
           <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
             <ImagePlus className="h-3 w-3" />
@@ -218,8 +228,8 @@ export default function ServiceEditor() {
               type="button"
               variant="outline"
               className="mt-3"
-              onClick={() => setService((prev) => ({ ...prev, image: '' }))}
-              disabled={saving}
+              onClick={() => !isViewer && setService((prev) => ({ ...prev, image: '' }))}
+              disabled={saving || isViewer}
             >
               Clear Image
             </Button>
@@ -237,6 +247,7 @@ export default function ServiceEditor() {
             value={service.order}
             onChange={handleChange}
             placeholder="0"
+            disabled={isViewer}
           />
           <p className="text-xs text-muted-foreground mt-1">
             Lower numbers appear first
@@ -251,15 +262,16 @@ export default function ServiceEditor() {
               checked={service.published}
               onChange={handleChange}
               className="rounded"
+              disabled={isViewer}
             />
             <span className="text-sm font-medium">Publish this service</span>
           </label>
         </Card>
 
         <div className="flex gap-4">
-          <Button type="submit" disabled={saving}>
+          <Button type="submit" disabled={saving || isViewer}>
             <Save className="h-4 w-4 mr-2" />
-            {saving ? 'Saving...' : 'Save Service'}
+            {saving ? 'Saving...' : isViewer ? 'Read-only' : 'Save Service'}
           </Button>
           <Link href="/admin/services">
             <Button variant="outline">Cancel</Button>

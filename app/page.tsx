@@ -45,36 +45,35 @@ export default function HomePage() {
       <Header />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
-        <section className="relative py-28 sm:py-44 bg-primary text-primary-foreground overflow-hidden">
-          <div className="absolute inset-0">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-28 sm:py-44 text-foreground">
+          <div className="absolute inset-0 opacity-60">
             {site.home.heroImage && (
               <img
                 src={site.home.heroImage}
                 alt=""
-                className="h-full w-full object-cover opacity-35"
+                className="h-full w-full object-cover grayscale blur-sm"
               />
             )}
-            <div className="absolute inset-0 bg-primary/70"></div>
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s'}}></div>
-            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{animationDuration: '5s'}}></div>
           </div>
-
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white/95 dark:from-transparent dark:via-black/10 dark:to-black/90"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
-              <div className="mb-8 inline-block opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
-                <span className="text-sm font-semibold text-accent uppercase tracking-widest">{site.home.heroBadge}</span>
+              <div className="mb-8 inline-block opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                <span className="rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent shadow-sm shadow-accent/10">
+                  {site.home.heroBadge}
+                </span>
               </div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-[-0.03em] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 {site.home.heroTitle}
               </h1>
-              <p className="text-lg sm:text-xl mb-12 opacity-80 font-light leading-relaxed max-w-2xl opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}>
+              <p className="text-lg sm:text-xl mb-12 max-w-2xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                 {site.home.heroSubtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fadeInUp" style={{animationDelay: '0.4s', animationFillMode: 'forwards'}}>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
                 <Link href="/contact">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+                    className="w-full sm:w-auto rounded-full bg-accent px-8 py-4 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/90"
                   >
                     {site.home.primaryCtaLabel}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -84,7 +83,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto border-primary-foreground/40 text-primary-foreground hover:bg-white/10 transition-all duration-300"
+                    className="w-full sm:w-auto rounded-full border border-foreground/10 bg-white/90 px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
                   >
                     {site.home.secondaryCtaLabel}
                   </Button>
@@ -149,54 +148,78 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&h=300&fit=crop&q=80" alt="Time Saving" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Zap className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Time Saving</h3>
+                  <p className="text-white/90 text-sm">Faster construction with minimal labour requirements</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">Time Saving</h3>
-                <p className="text-muted-foreground text-sm">Faster construction with minimal labour requirements</p>
               </div>
 
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Droplet className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop&q=80" alt="Less Wastage" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Droplet className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Less Wastage</h3>
+                  <p className="text-white/90 text-sm">Significantly lower waste compared to traditional methods</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">Less Wastage</h3>
-                <p className="text-muted-foreground text-sm">Significantly lower waste compared to traditional methods</p>
               </div>
 
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Shield className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&h=300&fit=crop&q=80" alt="High Durability" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Shield className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">High Durability</h3>
+                  <p className="text-white/90 text-sm">Enhanced fire, moisture and impact resistance</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">High Durability</h3>
-                <p className="text-muted-foreground text-sm">Enhanced fire, moisture and impact resistance</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.4s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Leaf className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.4s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1576021160550-112173f7f869?w=500&h=300&fit=crop&q=80" alt="Eco-Friendly" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Leaf className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Eco-Friendly</h3>
+                  <p className="text-white/90 text-sm">Non-toxic and environmentally sustainable products</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">Eco-Friendly</h3>
-                <p className="text-muted-foreground text-sm">Non-toxic and environmentally sustainable products</p>
               </div>
 
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.5s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Clock className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.5s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop&q=80" alt="Cost Effective" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Clock className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Cost Effective</h3>
+                  <p className="text-white/90 text-sm">Superior value with reduced construction expenses</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">Cost Effective</h3>
-                <p className="text-muted-foreground text-sm">Superior value with reduced construction expenses</p>
               </div>
 
-              <div className="text-center p-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.6s', animationFillMode: 'forwards'}}>
-                <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/10 mx-auto mb-4">
-                  <Volume2 className="h-8 w-8 text-accent" />
+              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.6s', animationFillMode: 'forwards', minHeight: '300px'}}>
+                <img src="https://images.unsplash.com/photo-1565182409498-7207267562da?w=500&h=300&fit=crop&q=80" alt="Sound Control" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
+                    <Volume2 className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">Sound Control</h3>
+                  <p className="text-white/90 text-sm">Superior acoustic insulation for peaceful spaces</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">Sound Control</h3>
-                <p className="text-muted-foreground text-sm">Superior acoustic insulation for peaceful spaces</p>
               </div>
             </div>
           </div>
@@ -330,21 +353,21 @@ export default function HomePage() {
                   category: 'Commercial',
                   description: 'Completed 250,000 sq ft of office space with fire-rated partitions and premium finishes in 6 months',
                   result: 'Delivered on schedule with 99% client satisfaction',
-                  image: '/images/commercial-project.jpg'
+                  image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80'
                 },
                 {
                   title: 'Residential Tower Development',
                   category: 'Residential',
                   description: 'Interior finishing for 200+ apartment units with moisture-resistant gypsum solutions',
                   result: 'Enhanced durability with zero moisture-related issues reported',
-                  image: '/images/interior-finish.jpg'
+                  image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c432b0c?w=800&h=600&fit=crop&q=80'
                 },
                 {
                   title: 'Hospitality Renovation',
                   category: 'Commercial',
                   description: 'Complete gypsum refurbishment of luxury hotel with acoustic insulation upgrades',
                   result: 'Improved guest experience with enhanced sound control and aesthetics',
-                  image: '/images/renovation-before-after.jpg'
+                  image: 'https://images.unsplash.com/photo-1579684385127-1ef15c64b417?w=800&h=600&fit=crop&q=80'
                 }
               ].map((caseStudy, index) => (
                 <div

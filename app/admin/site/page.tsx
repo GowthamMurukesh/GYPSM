@@ -16,6 +16,7 @@ import { ImagePlus, Save } from 'lucide-react';
 
 export default function SiteEditorPage() {
   const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [site, setSite] = useState<SiteContent>(defaultSiteContent);
   const [aboutBody, setAboutBody] = useState({
     title: '',
@@ -192,21 +193,23 @@ export default function SiteEditorPage() {
               label="Hero badge (small line above title)"
               value={site.home.heroBadge}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, heroBadge: v } }))}
+              disabled={isViewer || saving}
             />
             <ImageField
               label="Hero image"
               value={site.home.heroImage}
-              disabled={saving}
-              onFile={(file) => handleHeroImageUpload(file, 'home')}
-              onClear={() => setSite((s) => ({ ...s, home: { ...s.home, heroImage: '' } }))}
+              disabled={isViewer || saving}
+              onFile={(file) => !isViewer && handleHeroImageUpload(file, 'home')}
+              onClear={() => !isViewer && setSite((s) => ({ ...s, home: { ...s.home, heroImage: '' } }))}
             />
-            <Field label="Hero title" value={site.home.heroTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, heroTitle: v } }))} />
+            <Field label="Hero title" value={site.home.heroTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, heroTitle: v } }))} disabled={isViewer || saving} />
             <div className="space-y-2">
               <Label>Hero subtitle</Label>
               <textarea
                 className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.home.heroSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, home: { ...s.home, heroSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -214,23 +217,27 @@ export default function SiteEditorPage() {
                 label="Primary button"
                 value={site.home.primaryCtaLabel}
                 onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, primaryCtaLabel: v } }))}
+                disabled={isViewer || saving}
               />
               <Field
                 label="Secondary button"
                 value={site.home.secondaryCtaLabel}
                 onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, secondaryCtaLabel: v } }))}
+                disabled={isViewer || saving}
               />
             </div>
-            <Field label="“Why choose” heading" value={site.home.whyTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whyTitle: v } }))} />
+            <Field label="“Why choose” heading" value={site.home.whyTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whyTitle: v } }))} disabled={isViewer || saving} />
             <Field
               label="“Why choose” subtitle"
               value={site.home.whySubtitle}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whySubtitle: v } }))}
+              disabled={isViewer || saving}
             />
             <Field
               label="Benefits block title (icon grid)"
               value={site.home.benefitsTitle}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, benefitsTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Benefits block subtitle</Label>
@@ -238,12 +245,14 @@ export default function SiteEditorPage() {
                 className="w-full min-h-[72px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.home.benefitsSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, home: { ...s.home, benefitsSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
             <Field
               label="Products section title"
               value={site.home.productsTitle}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, productsTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Products section subtitle</Label>
@@ -251,12 +260,14 @@ export default function SiteEditorPage() {
                 className="w-full min-h-[72px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.home.productsSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, home: { ...s.home, productsSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
             <Field
               label="Solutions section title"
               value={site.home.solutionsTitle}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, solutionsTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Solutions section subtitle</Label>
@@ -264,15 +275,17 @@ export default function SiteEditorPage() {
                 className="w-full min-h-[72px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.home.solutionsSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, home: { ...s.home, solutionsSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
-            <Field label="Bottom CTA title" value={site.home.ctaTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, ctaTitle: v } }))} />
+            <Field label="Bottom CTA title" value={site.home.ctaTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, ctaTitle: v } }))} disabled={isViewer || saving} />
             <div className="space-y-2">
               <Label>Bottom CTA subtitle</Label>
               <textarea
                 className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.home.ctaSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, home: { ...s.home, ctaSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -280,16 +293,18 @@ export default function SiteEditorPage() {
                 label="Bottom primary button"
                 value={site.home.ctaPrimaryLabel}
                 onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, ctaPrimaryLabel: v } }))}
+                disabled={isViewer || saving}
               />
               <Field
                 label="Bottom secondary button"
                 value={site.home.ctaSecondaryLabel}
                 onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, ctaSecondaryLabel: v } }))}
+                disabled={isViewer || saving}
               />
             </div>
-            <Button onClick={saveHome} disabled={saving}>
+            <Button onClick={saveHome} disabled={saving || isViewer}>
               <Save className="h-4 w-4 mr-2" />
-              Save home
+              {isViewer ? 'Read-only' : 'Save home'}
             </Button>
           </Card>
         </TabsContent>
@@ -304,18 +319,20 @@ export default function SiteEditorPage() {
               label="Hero badge"
               value={site.about.heroBadge}
               onChange={(v) => setSite((s) => ({ ...s, about: { ...s.about, heroBadge: v } }))}
+              disabled={isViewer || saving}
             />
             <ImageField
               label="Hero image"
               value={site.about.heroImage}
-              disabled={saving}
-              onFile={(file) => handleHeroImageUpload(file, 'about')}
-              onClear={() => setSite((s) => ({ ...s, about: { ...s.about, heroImage: '' } }))}
+              disabled={isViewer || saving}
+              onFile={(file) => !isViewer && handleHeroImageUpload(file, 'about')}
+              onClear={() => !isViewer && setSite((s) => ({ ...s, about: { ...s.about, heroImage: '' } }))}
             />
             <Field
               label="Hero title"
               value={site.about.heroTitle}
               onChange={(v) => setSite((s) => ({ ...s, about: { ...s.about, heroTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Hero subtitle</Label>
@@ -323,13 +340,15 @@ export default function SiteEditorPage() {
                 className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.about.heroSubtitle}
                 onChange={(e) => setSite((s) => ({ ...s, about: { ...s.about, heroSubtitle: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
-            <Field label="Page title (SEO)" value={aboutBody.title} onChange={(v) => setAboutBody((b) => ({ ...b, title: v }))} />
+            <Field label="Page title (SEO)" value={aboutBody.title} onChange={(v) => setAboutBody((b) => ({ ...b, title: v }))} disabled={isViewer || saving} />
             <Field
               label="Short description"
               value={aboutBody.description}
               onChange={(v) => setAboutBody((b) => ({ ...b, description: v }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Main content (HTML)</Label>
@@ -337,6 +356,7 @@ export default function SiteEditorPage() {
                 className="w-full min-h-[220px] font-mono text-sm rounded-md border border-input bg-background px-3 py-2"
                 value={aboutBody.content}
                 onChange={(e) => setAboutBody((b) => ({ ...b, content: e.target.value }))}
+                disabled={isViewer}
               />
             </div>
             <label className="flex items-center gap-2 text-sm">
@@ -344,12 +364,13 @@ export default function SiteEditorPage() {
                 type="checkbox"
                 checked={aboutBody.published}
                 onChange={(e) => setAboutBody((b) => ({ ...b, published: e.target.checked }))}
+                disabled={isViewer}
               />
               Published (visible on public site)
             </label>
-            <Button onClick={saveAbout} disabled={saving}>
+            <Button onClick={saveAbout} disabled={saving || isViewer}>
               <Save className="h-4 w-4 mr-2" />
-              Save about
+              {isViewer ? 'Read-only' : 'Save about'}
             </Button>
           </Card>
         </TabsContent>
@@ -364,18 +385,20 @@ export default function SiteEditorPage() {
               label="Hero badge"
               value={site.servicesPage.heroBadge}
               onChange={(v) => setSite((s) => ({ ...s, servicesPage: { ...s.servicesPage, heroBadge: v } }))}
+              disabled={isViewer || saving}
             />
             <ImageField
               label="Hero image"
               value={site.servicesPage.heroImage}
-              disabled={saving}
-              onFile={(file) => handleHeroImageUpload(file, 'servicesPage')}
-              onClear={() => setSite((s) => ({ ...s, servicesPage: { ...s.servicesPage, heroImage: '' } }))}
+              disabled={isViewer || saving}
+              onFile={(file) => !isViewer && handleHeroImageUpload(file, 'servicesPage')}
+              onClear={() => !isViewer && setSite((s) => ({ ...s, servicesPage: { ...s.servicesPage, heroImage: '' } }))}
             />
             <Field
               label="Hero title"
               value={site.servicesPage.heroTitle}
               onChange={(v) => setSite((s) => ({ ...s, servicesPage: { ...s.servicesPage, heroTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Hero subtitle</Label>
@@ -388,11 +411,12 @@ export default function SiteEditorPage() {
                     servicesPage: { ...s.servicesPage, heroSubtitle: e.target.value },
                   }))
                 }
+                disabled={isViewer}
               />
             </div>
-            <Button onClick={saveServices} disabled={saving}>
+            <Button onClick={saveServices} disabled={saving || isViewer}>
               <Save className="h-4 w-4 mr-2" />
-              Save services header
+              {isViewer ? 'Read-only' : 'Save services header'}
             </Button>
           </Card>
         </TabsContent>
@@ -402,14 +426,15 @@ export default function SiteEditorPage() {
             <ImageField
               label="Hero image"
               value={site.contactPage.heroImage}
-              disabled={saving}
-              onFile={(file) => handleHeroImageUpload(file, 'contactPage')}
-              onClear={() => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, heroImage: '' } }))}
+              disabled={isViewer || saving}
+              onFile={(file) => !isViewer && handleHeroImageUpload(file, 'contactPage')}
+              onClear={() => !isViewer && setSite((s) => ({ ...s, contactPage: { ...s.contactPage, heroImage: '' } }))}
             />
             <Field
               label="Hero title"
               value={site.contactPage.heroTitle}
               onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, heroTitle: v } }))}
+              disabled={isViewer || saving}
             />
             <div className="space-y-2">
               <Label>Hero subtitle</Label>
@@ -422,26 +447,29 @@ export default function SiteEditorPage() {
                     contactPage: { ...s.contactPage, heroSubtitle: e.target.value },
                   }))
                 }
+                disabled={isViewer}
               />
             </div>
             <Field
               label="Sidebar section title"
               value={site.contactPage.sectionTitle}
               onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, sectionTitle: v } }))}
+              disabled={isViewer || saving}
             />
-            <Field label="Phone (display)" value={site.contactPage.phone} onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, phone: v } }))} />
-            <Field label="Email (display)" value={site.contactPage.email} onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, email: v } }))} />
+            <Field label="Phone (display)" value={site.contactPage.phone} onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, phone: v } }))} disabled={isViewer || saving} />
+            <Field label="Email (display)" value={site.contactPage.email} onChange={(v) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, email: v } }))} disabled={isViewer || saving} />
             <div className="space-y-2">
               <Label>Address (use line breaks)</Label>
               <textarea
                 className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={site.contactPage.address}
                 onChange={(e) => setSite((s) => ({ ...s, contactPage: { ...s.contactPage, address: e.target.value } }))}
+                disabled={isViewer}
               />
             </div>
-            <Button onClick={saveContact} disabled={saving}>
+            <Button onClick={saveContact} disabled={saving || isViewer}>
               <Save className="h-4 w-4 mr-2" />
-              Save contact
+              {isViewer ? 'Read-only' : 'Save contact'}
             </Button>
           </Card>
         </TabsContent>
@@ -454,15 +482,17 @@ function Field({
   label,
   value,
   onChange,
+  disabled,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  disabled?: boolean;
 }) {
   return (
     <div className="space-y-2">
       <Label>{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} />
+      <Input value={value} onChange={(e) => onChange(e.target.value)} disabled={disabled} />
     </div>
   );
 }

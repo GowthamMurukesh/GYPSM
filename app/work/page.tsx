@@ -14,7 +14,7 @@ const projects = [
     scope: 'Interior Finishing, Fire-Rated Systems',
     description: 'Complete gypsum finishing for a 250,000 sq ft modern office building. Delivered fire-rated partition systems, premium wall finishes, and suspended ceiling installations across 15 floors.',
     results: ['On-time delivery', '99% client satisfaction', 'Zero safety incidents'],
-    image: '/images/commercial-project.jpg'
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop&q=80'
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const projects = [
     scope: 'Unit Finishing, Moisture Solutions',
     description: 'Interior finishing for 200+ residential units. Implemented moisture-resistant gypsum solutions in all bathrooms and kitchens, ensuring long-term durability in a coastal climate.',
     results: ['Zero warranty claims', 'Premium finishing quality', 'Ahead of schedule'],
-    image: '/images/interior-finish.jpg'
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c432b0c?w=1200&h=800&fit=crop&q=80'
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const projects = [
     scope: 'Renovation, Acoustic Solutions, Design',
     description: 'Complete gypsum system upgrade for a premium hotel property. Installed sound-insulating solutions, moisture-resistant boards in wet areas, and custom ceiling designs for guest rooms.',
     results: ['Enhanced guest experience', 'Improved acoustic performance', 'Maintained luxury standards'],
-    image: '/images/soundproof-solution.jpg'
+    image: 'https://images.unsplash.com/photo-1579684385127-1ef15c64b417?w=1200&h=800&fit=crop&q=80'
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const projects = [
     scope: 'Fire-Rated Systems, Sanitary Solutions',
     description: 'High-performance gypsum systems for a new medical facility. Implemented cleanroom-standard installations with fire-rated and moisture-resistant specifications.',
     results: ['Met medical facility standards', 'Infection control compliance', 'Seamless operation handover'],
-    image: '/images/fireproof-board.jpg'
+    image: 'https://images.unsplash.com/photo-1576091160550-112173f7f869?w=1200&h=800&fit=crop&q=80'
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const projects = [
     scope: 'Classroom Finishing, Acoustic Treatment',
     description: 'Sound-insulated classroom systems for a new educational building. Created optimal learning environments with acoustic panels, premium finishes, and durable gypsum solutions.',
     results: ['Improved learning acoustics', 'Durability for high-traffic areas', 'Faculty satisfaction'],
-    image: '/images/ceiling-installation.jpg'
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop&q=80'
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ const projects = [
     scope: 'Interior Finishing, Aesthetic Design',
     description: 'Comprehensive gypsum finishing for a multi-unit retail center. Delivered varied aesthetic finishes for different tenant spaces while maintaining structural consistency.',
     results: ['Ahead of schedule', 'Tenant satisfaction', 'Quality consistency'],
-    image: '/images/commercial-project.jpg'
+    image: 'https://images.unsplash.com/photo-1565182409498-7207267562da?w=1200&h=800&fit=crop&q=80'
   }
 ];
 
@@ -69,21 +69,21 @@ export default function WorkPage() {
       <Header />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
-        <section className="relative py-24 sm:py-36 bg-primary text-primary-foreground overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl opacity-60"></div>
-            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl opacity-40"></div>
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
+          <div className="absolute inset-0 opacity-60">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
           </div>
-
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
-              <div className="mb-6 inline-block opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
-                <span className="text-sm font-semibold text-accent uppercase tracking-widest">Our Work</span>
+              <div className="mb-8 inline-flex rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                Our Work
               </div>
-              <h1 className="text-5xl sm:text-6xl font-bold mb-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+              <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 Projects That Transform Spaces
               </h1>
-              <p className="text-xl opacity-80 max-w-3xl font-light opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}>
+              <p className="text-lg max-w-3xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                 Explore our portfolio of completed projects across residential, commercial, and specialized industries, showcasing quality craftsmanship and innovative gypsum solutions.
               </p>
             </div>

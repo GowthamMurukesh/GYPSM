@@ -6,9 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getAllServices, deleteService } from '@/lib/firebaseUtils';
 import { Service } from '@/lib/types';
+import { useAuthStore } from '@/lib/authStore';
 import { ArrowRight, Plus, Trash2 } from 'lucide-react';
 
 export default function ServicesPage() {
+  const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,12 +48,14 @@ export default function ServicesPage() {
           <h1 className="text-3xl font-bold mb-2">Services</h1>
           <p className="text-muted-foreground">Manage your service offerings</p>
         </div>
-        <Link href="/admin/services/new">
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            New Service
-          </Button>
-        </Link>
+        {!isViewer && (
+          <Link href="/admin/services/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              New Service
+            </Button>
+          </Link>
+        )}
       </div>
 
       {loading ? (
@@ -80,17 +85,19 @@ export default function ServicesPage() {
                 <div className="flex gap-2">
                   <Link href={`/admin/services/${service.id}`}>
                     <Button variant="outline" size="sm">
-                      Edit
+                      {isViewer ? 'View' : 'Edit'}
                     </Button>
                   </Link>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDelete(service.id)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  {!isViewer && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDelete(service.id)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </Card>

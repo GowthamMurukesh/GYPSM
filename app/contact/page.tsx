@@ -95,22 +95,29 @@ export default function ContactPage() {
       <Header />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
-        <section className="relative py-16 sm:py-24 bg-primary text-primary-foreground overflow-hidden">
-          <div className="absolute inset-0">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-20 sm:py-28 text-foreground">
+          <div className="absolute inset-0 opacity-60">
             {site.contactPage.heroImage && (
               <img
                 src={site.contactPage.heroImage}
                 alt=""
-                className="h-full w-full object-cover opacity-35"
+                className="h-full w-full object-cover grayscale blur-sm"
               />
             )}
-            <div className="absolute inset-0 bg-primary/70"></div>
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">{site.contactPage.heroTitle}</h1>
-            <p className="text-lg opacity-90 max-w-2xl">
-              {site.contactPage.heroSubtitle}
-            </p>
+            <div className="max-w-3xl">
+              <span className="inline-flex rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 mb-6 opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                Contact
+              </span>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+                {site.contactPage.heroTitle}
+              </h1>
+              <p className="text-lg max-w-2xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+                {site.contactPage.heroSubtitle}
+              </p>
+            </div>
           </div>
         </section>
 

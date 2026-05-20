@@ -6,9 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getAllPages } from '@/lib/firebaseUtils';
 import { PageContent } from '@/lib/types';
+import { useAuthStore } from '@/lib/authStore';
 import { ArrowRight, Plus } from 'lucide-react';
 
 export default function PagesPage() {
+  const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [pages, setPages] = useState<PageContent[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,12 +40,14 @@ export default function PagesPage() {
             Manage your website pages and content
           </p>
         </div>
-        <Link href="/admin/pages/new">
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            New Page
-          </Button>
-        </Link>
+        {!isViewer && (
+          <Link href="/admin/pages/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              New Page
+            </Button>
+          </Link>
+        )}
       </div>
 
       {/* Pages List */}
@@ -73,7 +78,7 @@ export default function PagesPage() {
                 </div>
                 <Link href={`/admin/pages/${page.id}`}>
                   <Button variant="outline" size="sm">
-                    Edit
+                    {isViewer ? 'View' : 'Edit'}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </Link>

@@ -15,19 +15,12 @@ export default function AdminLayout({
 }) {
   const router = useRouter();
   const { user, userProfile, loading, profileLoadError } = useAuthStore();
-  const canAccessCms = userProfile?.role === 'admin' || userProfile?.role === 'editor';
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
   }, [user, loading, router]);
-
-  useEffect(() => {
-    if (!loading && user && userProfile && !canAccessCms) {
-      router.push('/');
-    }
-  }, [canAccessCms, loading, router, user, userProfile]);
 
   if (loading) {
     return (
@@ -59,21 +52,7 @@ export default function AdminLayout({
     );
   }
 
-  if (userProfile && !canAccessCms) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-6">
-        <Card className="max-w-md p-6 space-y-3">
-          <p className="font-medium">No CMS access</p>
-          <p className="text-sm text-muted-foreground">
-            Your account needs the <strong>editor</strong> or <strong>admin</strong> role. Ask an administrator to update your user in Firestore.
-          </p>
-          <Button asChild>
-            <Link href="/">Go home</Link>
-          </Button>
-        </Card>
-      </div>
-    );
-  }
+  const canAccessCms = ['admin', 'editor', 'viewer'].includes(userProfile?.role ?? 'viewer');
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">

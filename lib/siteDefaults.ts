@@ -5,6 +5,7 @@ export const SITE_CONTENT_DOC_ID = 'main';
 
 export const defaultSiteContent: SiteContent = {
   home: {
+    heroImage: 'https://images.unsplash.com/photo-1541537227470-7db248c49ce5?w=1600&h=900&fit=crop&q=80',
     heroBadge: 'Excellence in Every Layer',
     heroTitle: 'Premium Plastering Solutions',
     heroSubtitle:
@@ -29,18 +30,21 @@ export const defaultSiteContent: SiteContent = {
     ctaSecondaryLabel: 'View Products',
   },
   about: {
+    heroImage: 'https://images.unsplash.com/photo-1578926078328-123e187c6b5d?w=1600&h=900&fit=crop&q=80',
     heroBadge: 'Our Journey',
     heroTitle: 'About Royal Gypsum',
     heroSubtitle:
       'Discover the expertise and commitment behind our trusted plastering and gypsum solutions.',
   },
   servicesPage: {
+    heroImage: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&h=900&fit=crop&q=80',
     heroBadge: 'Product Catalog',
     heroTitle: 'Our Product Range',
     heroSubtitle:
       'Specialized plastering and gypsum solutions engineered for superior performance, durability, and aesthetic excellence.',
   },
   contactPage: {
+    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=900&fit=crop&q=80',
     heroTitle: 'Contact Us',
     heroSubtitle:
       "Get in touch with our team. We're here to answer your questions and provide a free quote.",

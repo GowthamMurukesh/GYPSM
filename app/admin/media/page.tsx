@@ -14,6 +14,7 @@ import { getYouTubeEmbedUrl, isYouTubeUrl } from '@/lib/mediaUtils';
 
 export default function MediaPage() {
   const { userProfile, loading: authLoading } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -48,6 +49,12 @@ export default function MediaPage() {
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
+    if (isViewer) {
+      setMessage('Viewer access is read-only. File uploads are disabled.');
+      setMessageType('error');
+      return;
+    }
 
     if (!userProfile?.id) {
       setMessage('You must be logged in to upload files');
@@ -147,6 +154,11 @@ export default function MediaPage() {
 
   const handleYouTubeSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isViewer) {
+      setMessage('Viewer access is read-only. You cannot add videos.');
+      setMessageType('error');
+      return;
+    }
     setMessage(null);
 
     if (!isYouTubeUrl(youtubeUrl) || !getYouTubeEmbedUrl(youtubeUrl)) {
@@ -237,9 +249,9 @@ export default function MediaPage() {
           />
           <Button
             onClick={() => fileInputRef.current?.click()}
-            disabled={uploading}
+            disabled={uploading || isViewer}
           >
-            {uploading ? 'Uploading...' : 'Select Files'}
+            {uploading ? 'Uploading...' : isViewer ? 'Upload Disabled' : 'Select Files'}
           </Button>
         </div>
       </Card>
@@ -250,10 +262,10 @@ export default function MediaPage() {
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
             placeholder="Paste YouTube link"
-            disabled={uploading}
+            disabled={uploading || isViewer}
           />
-          <Button type="submit" disabled={uploading}>
-            Add YouTube Video
+          <Button type="submit" disabled={uploading || isViewer}>
+            {isViewer ? 'Disabled' : 'Add YouTube Video'}
           </Button>
         </form>
       </Card>
@@ -308,6 +320,7 @@ export default function MediaPage() {
                 )}
 
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                  {!isViewer && (
                   <Button
                     size="sm"
                     variant="outline"
@@ -316,6 +329,7 @@ export default function MediaPage() {
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
+                )}
                 </div>
               </div>
 

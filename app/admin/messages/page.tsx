@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { useAuthStore } from '@/lib/authStore';
 import { Mail, Archive, Trash2 } from 'lucide-react';
 
 interface ContactSubmission {
@@ -18,6 +19,8 @@ interface ContactSubmission {
 }
 
 export default function MessagesPage() {
+  const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [messages, setMessages] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactSubmission | null>(null);
@@ -149,6 +152,7 @@ export default function MessagesPage() {
                 </div>
 
                 <div className="flex gap-2 pt-4 border-t border-border">
+                  {!isViewer && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -158,6 +162,8 @@ export default function MessagesPage() {
                     <Archive className="h-4 w-4 mr-2" />
                     {selectedMessage.status === 'read' ? 'Read' : 'Mark as Read'}
                   </Button>
+                )}
+                {!isViewer && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -167,6 +173,7 @@ export default function MessagesPage() {
                     <Trash2 className="h-4 w-4 mr-2" />
                     Delete
                   </Button>
+                )}
                 </div>
               </Card>
             ) : (

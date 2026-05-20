@@ -71,29 +71,26 @@ export default function AboutPage() {
       <Header />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
-        <section className="relative py-24 sm:py-36 bg-primary text-primary-foreground overflow-hidden">
-          <div className="absolute inset-0">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
+          <div className="absolute inset-0 opacity-60">
             {site.about.heroImage && (
               <img
                 src={site.about.heroImage}
                 alt=""
-                className="h-full w-full object-cover opacity-35"
+                className="h-full w-full object-cover grayscale blur-sm"
               />
             )}
-            <div className="absolute inset-0 bg-primary/70"></div>
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl opacity-60"></div>
-            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl opacity-40"></div>
           </div>
-
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
-              <div className="mb-6 inline-block opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
-                <span className="text-sm font-semibold text-accent uppercase tracking-widest">{site.about.heroBadge}</span>
+              <div className="mb-8 inline-flex rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                {site.about.heroBadge}
               </div>
-              <h1 className="text-5xl sm:text-6xl font-bold mb-6 opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+              <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 {site.about.heroTitle}
               </h1>
-              <p className="text-xl opacity-80 max-w-3xl font-light opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}>
+              <p className="text-lg sm:text-xl max-w-3xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                 {site.about.heroSubtitle}
               </p>
             </div>

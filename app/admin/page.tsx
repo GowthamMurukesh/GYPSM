@@ -20,6 +20,7 @@ import { collection, query, getDocs } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const { userProfile } = useAuthStore();
+  const isViewer = userProfile?.role === 'viewer';
   const [stats, setStats] = useState({
     pages: 0,
     services: 0,
