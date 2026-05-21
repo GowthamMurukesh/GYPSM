@@ -8,6 +8,18 @@ import { useAuthStore } from '@/lib/authStore';
 import { Service, SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
 
+const SERVICES_HERO_IMAGE = '/images/commercial-project.jpg';
+const SERVICE_IMAGE_FALLBACKS = [
+  '/images/interior-finish.jpg',
+  '/images/fireproof-board.jpg',
+  '/images/moisture-resistant.jpg',
+  '/images/soundproof-solution.jpg',
+  '/images/ceiling-installation.jpg',
+  '/images/commercial-project.jpg',
+  '/images/renovation-before-after.jpg',
+  '/images/hero-plastering.jpg',
+];
+
 export default function ServicesPage() {
   const { initializeAuth } = useAuthStore();
   const [services, setServices] = useState<Service[]>([]);
@@ -43,13 +55,11 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            {site.servicesPage.heroImage && (
-              <img
-                src={site.servicesPage.heroImage}
-                alt=""
-                className="h-full w-full object-cover grayscale blur-sm"
-              />
-            )}
+            <img
+              src={site.servicesPage.heroImage || SERVICES_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -80,16 +90,14 @@ export default function ServicesPage() {
                     className="overflow-hidden rounded-lg border border-border bg-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col opacity-0 animate-fadeInUp"
                     style={{animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards'}}
                   >
-                    {service.image && (
-                      <div className="h-64 bg-muted overflow-hidden relative">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                      </div>
-                    )}
+                    <div className="h-64 bg-muted overflow-hidden relative">
+                      <img
+                        src={service.image || SERVICE_IMAGE_FALLBACKS[index % SERVICE_IMAGE_FALLBACKS.length]}
+                        alt={service.title}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
                     <div className="p-8 flex-1 flex flex-col">
                       <h3 className="text-xl font-semibold mb-3 text-foreground">{service.title}</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">

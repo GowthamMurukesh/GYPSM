@@ -13,6 +13,8 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
 
+const CONTACT_HERO_IMAGE = '/images/renovation-before-after.jpg';
+
 interface ContactForm {
   name: string;
   email: string;
@@ -97,13 +99,11 @@ export default function ContactPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-20 sm:py-28 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            {site.contactPage.heroImage && (
-              <img
-                src={site.contactPage.heroImage}
-                alt=""
-                className="h-full w-full object-cover grayscale blur-sm"
-              />
-            )}
+            <img
+              src={site.contactPage.heroImage || CONTACT_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

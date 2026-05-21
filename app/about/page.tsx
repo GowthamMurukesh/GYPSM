@@ -8,6 +8,17 @@ import { useAuthStore } from '@/lib/authStore';
 import { PageContent, SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
 
+const ABOUT_HERO_IMAGE = '/images/interior-finish.jpg';
+const aboutSectionImages = {
+  story: '/images/hero-plastering.jpg',
+  stats: '/images/commercial-project.jpg',
+  team: [
+    '/images/interior-finish.jpg',
+    '/images/ceiling-installation.jpg',
+    '/images/renovation-before-after.jpg',
+  ],
+};
+
 export default function AboutPage() {
   const { initializeAuth } = useAuthStore();
   const [page, setPage] = useState<PageContent | null>(null);
@@ -73,13 +84,11 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            {site.about.heroImage && (
-              <img
-                src={site.about.heroImage}
-                alt=""
-                className="h-full w-full object-cover grayscale blur-sm"
-              />
-            )}
+            <img
+              src={site.about.heroImage || ABOUT_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -104,6 +113,13 @@ export default function AboutPage() {
               <p className="text-center text-muted-foreground">Loading page content...</p>
             ) : page ? (
               <div className="max-w-4xl mx-auto">
+                <div className="mb-8 h-80 overflow-hidden rounded-lg border border-border bg-muted opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
+                  <img
+                    src={aboutSectionImages.story}
+                    alt="Professional gypsum plastering team applying a smooth wall finish"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
                 <div className="bg-card rounded-lg border border-border p-8 md:p-16 opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
                   <div className="prose prose-sm md:prose-base max-w-none">
                     <style>{`
@@ -129,7 +145,16 @@ export default function AboutPage() {
 
                 {/* Stats Section */}
                 <div className="mt-20">
-                  <h2 className="text-4xl font-bold mb-12 text-center">Why Companies Trust Us</h2>
+                  <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-[1fr_0.85fr] md:items-end">
+                    <h2 className="text-4xl font-bold text-foreground">Why Companies Trust Us</h2>
+                    <div className="h-48 overflow-hidden rounded-lg border border-border bg-muted">
+                      <img
+                        src={aboutSectionImages.stats}
+                        alt="Commercial gypsum project with premium interior construction"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[
                       { number: '15+', label: 'Years in Business' },
@@ -158,8 +183,12 @@ export default function AboutPage() {
                         className="text-center p-8 rounded-lg border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-2 opacity-0 animate-fadeInUp"
                         style={{animationDelay: `${0.6 + i * 0.1}s`, animationFillMode: 'forwards'}}
                       >
-                        <div className="w-28 h-28 mx-auto mb-4 bg-gradient-to-br from-accent/20 to-accent/5 rounded-full flex items-center justify-center">
-                          <span className="text-3xl font-bold text-accent/60">{i}</span>
+                        <div className="w-28 h-28 mx-auto mb-4 overflow-hidden rounded-full bg-muted ring-4 ring-accent/10">
+                          <img
+                            src={aboutSectionImages.team[i - 1]}
+                            alt={`Royal Gypsum expert team member ${i}`}
+                            className="h-full w-full object-cover"
+                          />
                         </div>
                         <h3 className="text-lg font-semibold text-foreground mb-2">Expert Team Member</h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">

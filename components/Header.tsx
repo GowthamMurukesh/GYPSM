@@ -4,29 +4,34 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X, LogIn } from 'lucide-react';
 import { useAuthStore } from '@/lib/authStore';
+import { cn } from '@/lib/utils';
+const Logoimage = '/royal gypsum .png';
 
-export function Header() {
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, userProfile } = useAuthStore();
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/work', label: 'Work' },
-    { href: '/solutions', label: 'Solutions' },
+    // { href: '/work', label: 'Work' },
+    // { href: '/solutions', label: 'Solutions' },
     { href: '/services', label: 'Services' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-lg shadow-sm">
+    <header className={cn('sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-lg shadow-sm', className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-primary font-semibold text-sm shadow-sm">
-              RG
-            </div>
+            <img src={Logoimage} alt="Logo" className="h-12 w-auto" />
+            
             <span className="hidden text-base font-semibold tracking-[0.18em] uppercase text-foreground sm:inline">
               Royal Gypsum
             </span>

@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
+const WORK_HERO_IMAGE = '/images/commercial-project.jpg';
+const WORK_CTA_IMAGE = '/images/renovation-before-after.jpg';
+
 const projects = [
   {
     id: 1,
@@ -71,8 +74,11 @@ export default function WorkPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+            <img
+              src={WORK_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -142,8 +148,15 @@ export default function WorkPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 sm:py-32 bg-card border-t border-border">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative overflow-hidden py-24 sm:py-32 bg-card border-t border-border">
+          <div className="absolute inset-0 opacity-10">
+            <img
+              src={WORK_CTA_IMAGE}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div className="max-w-2xl mx-auto">
               <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-foreground">
                 Ready to Start Your Project?

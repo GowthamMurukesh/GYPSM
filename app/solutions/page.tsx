@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const SOLUTIONS_HERO_IMAGE = '/images/ceiling-installation.jpg';
+const CONSULTATION_IMAGE = '/images/hero-plastering.jpg';
+
 const solutions = [
   {
     id: 1,
@@ -19,7 +22,9 @@ const solutions = [
       'Paint-ready surfaces',
       'Quality assurance inspections'
     ],
-    benefits: 'Creates flawless interior surfaces that enhance property value and aesthetic appeal.'
+    benefits: 'Creates flawless interior surfaces that enhance property value and aesthetic appeal.',
+    image: '/images/interior-finish.jpg',
+    imageAlt: 'Luxury interior wall with smooth gypsum finishing'
   },
   {
     id: 2,
@@ -33,7 +38,9 @@ const solutions = [
       'Fire-rated systems',
       'Accessibility features'
     ],
-    benefits: 'Optimizes space acoustics, improves lighting distribution, and simplifies maintenance access.'
+    benefits: 'Optimizes space acoustics, improves lighting distribution, and simplifies maintenance access.',
+    image: '/images/ceiling-installation.jpg',
+    imageAlt: 'Suspended ceiling system installation in a modern space'
   },
   {
     id: 3,
@@ -47,7 +54,9 @@ const solutions = [
       'Professional installation',
       'Certification documentation'
     ],
-    benefits: 'Ensures safety compliance while maintaining design flexibility and aesthetic appeal.'
+    benefits: 'Ensures safety compliance while maintaining design flexibility and aesthetic appeal.',
+    image: '/images/fireproof-board.jpg',
+    imageAlt: 'Fire-resistant gypsum board material detail'
   },
   {
     id: 4,
@@ -61,7 +70,9 @@ const solutions = [
       'Bathroom wall finishing',
       'Kitchen backsplash support'
     ],
-    benefits: 'Prevents moisture damage, mold growth, and structural deterioration in wet areas.'
+    benefits: 'Prevents moisture damage, mold growth, and structural deterioration in wet areas.',
+    image: '/images/moisture-resistant.jpg',
+    imageAlt: 'Moisture-resistant gypsum board for wet interior areas'
   },
   {
     id: 5,
@@ -75,7 +86,9 @@ const solutions = [
       'Decibel reduction technology',
       'Testing and verification'
     ],
-    benefits: 'Reduces noise transmission, improves focus, and enhances overall user comfort.'
+    benefits: 'Reduces noise transmission, improves focus, and enhances overall user comfort.',
+    image: '/images/soundproof-solution.jpg',
+    imageAlt: 'Sound insulation gypsum system in a modern interior'
   },
   {
     id: 6,
@@ -89,7 +102,9 @@ const solutions = [
       '3D wall treatments',
       'Custom lighting integration'
     ],
-    benefits: 'Transforms spaces with distinctive design elements that reflect your brand identity.'
+    benefits: 'Transforms spaces with distinctive design elements that reflect your brand identity.',
+    image: '/images/hero-plastering.jpg',
+    imageAlt: 'Construction worker applying custom gypsum plaster texture'
   }
 ];
 
@@ -101,8 +116,11 @@ export default function SolutionsPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-24 sm:py-36 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+            <img
+              src={SOLUTIONS_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -166,15 +184,14 @@ export default function SolutionsPage() {
                     </Link>
                   </div>
 
-                  {/* Image Placeholder */}
+                  {/* Image */}
                   <div className={index % 2 === 1 ? 'md:order-1' : ''}>
                     <div className="rounded-lg overflow-hidden bg-card border border-border h-96">
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/10 to-accent/5">
-                        <div className="text-center">
-                          <div className="text-6xl font-bold text-accent/30 mb-4">{solution.id}</div>
-                          <p className="text-muted-foreground font-medium">{solution.title}</p>
-                        </div>
-                      </div>
+                      <img
+                        src={solution.image}
+                        alt={solution.imageAlt}
+                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
                     </div>
                   </div>
                 </div>
@@ -208,7 +225,15 @@ export default function SolutionsPage() {
                 </div>
               </div>
 
-              <div className="bg-background rounded-lg border border-border p-8">
+              <div className="overflow-hidden rounded-lg border border-border bg-background">
+                <div className="h-56 bg-muted">
+                  <img
+                    src={CONSULTATION_IMAGE}
+                    alt="Gypsum plastering specialist preparing a premium wall finish"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-8">
                 <h3 className="text-2xl font-bold mb-6 text-foreground">Ready to Discuss Your Project?</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Let's explore which solutions best fit your vision. Our experts are ready to guide you through the process.
@@ -219,6 +244,7 @@ export default function SolutionsPage() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
+                </div>
               </div>
             </div>
           </div>

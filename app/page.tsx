@@ -11,6 +11,29 @@ import { useAuthStore } from '@/lib/authStore';
 import { Service, SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
 
+const HOME_HERO_IMAGE = '/images/hero-plastering.jpg';
+const sectionImages = {
+  quality: '/images/interior-finish.jpg',
+  support: '/images/commercial-project.jpg',
+  excellence: '/images/ceiling-installation.jpg',
+  residential: '/images/renovation-before-after.jpg',
+  commercial: '/images/commercial-project.jpg',
+  testimonials: '/images/interior-finish.jpg',
+  industries: '/images/fireproof-board.jpg',
+  stats: '/images/hero-plastering.jpg',
+  cta: '/images/moisture-resistant.jpg',
+};
+const serviceImageFallbacks = [
+  '/images/interior-finish.jpg',
+  '/images/fireproof-board.jpg',
+  '/images/moisture-resistant.jpg',
+  '/images/soundproof-solution.jpg',
+  '/images/ceiling-installation.jpg',
+  '/images/commercial-project.jpg',
+  '/images/renovation-before-after.jpg',
+  '/images/hero-plastering.jpg',
+];
+
 export default function HomePage() {
   const { initializeAuth } = useAuthStore();
   const [services, setServices] = useState<Service[]>([]);
@@ -42,18 +65,16 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
+      <Header  />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-28 sm:py-44 text-foreground">
           <div className="absolute inset-0 opacity-60">
-            {site.home.heroImage && (
-              <img
-                src={site.home.heroImage}
-                alt=""
-                className="h-full w-full object-cover grayscale blur-sm"
-              />
-            )}
+            <img
+              src={site.home.heroImage || HOME_HERO_IMAGE}
+              alt=""
+              className="h-full w-full object-cover grayscale blur-sm"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white/95 dark:from-transparent dark:via-black/10 dark:to-black/90"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -105,6 +126,13 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="p-8 bg-card rounded-lg border border-border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                  <img
+                    src={sectionImages.quality}
+                    alt="Smooth premium gypsum wall finish"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Leaf className="h-7 w-7 text-accent" />
                 </div>
@@ -115,6 +143,13 @@ export default function HomePage() {
               </div>
 
               <div className="p-8 bg-card rounded-lg border border-border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                  <img
+                    src={sectionImages.support}
+                    alt="Commercial construction support team on site"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Truck className="h-7 w-7 text-accent" />
                 </div>
@@ -125,6 +160,13 @@ export default function HomePage() {
               </div>
 
               <div className="p-8 bg-card rounded-lg border border-border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                  <img
+                    src={sectionImages.excellence}
+                    alt="Modern ceiling installation with precise finishing"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Award className="h-7 w-7 text-accent" />
                 </div>
@@ -248,16 +290,14 @@ export default function HomePage() {
                       className="overflow-hidden rounded-lg border border-border bg-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-0 animate-fadeInUp"
                       style={{animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards'}}
                     >
-                      {service.image && (
-                        <div className="h-56 bg-muted overflow-hidden relative">
-                          <img
-                            src={service.image}
-                            alt={service.title}
-                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                        </div>
-                      )}
+                      <div className="h-56 bg-muted overflow-hidden relative">
+                        <img
+                          src={service.image || serviceImageFallbacks[index % serviceImageFallbacks.length]}
+                          alt={service.title}
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                      </div>
                       <div className="p-6">
                         <h3 className="text-lg font-semibold mb-2 text-foreground">{service.title}</h3>
                         <p className="text-muted-foreground text-sm leading-relaxed">
@@ -292,6 +332,13 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
+                <div className="mb-8 h-72 overflow-hidden rounded-lg border border-border bg-muted">
+                  <img
+                    src={sectionImages.residential}
+                    alt="Residential interior renovation with new gypsum finishing"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Residential Solutions</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   Transform home interiors with premium gypsum finishing. From smooth wall surfaces to decorative ceilings, we deliver the precision and aesthetics that elevate residential spaces.
@@ -313,6 +360,13 @@ export default function HomePage() {
               </div>
 
               <div className="opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+                <div className="mb-8 h-72 overflow-hidden rounded-lg border border-border bg-muted">
+                  <img
+                    src={sectionImages.commercial}
+                    alt="Large commercial interior prepared for gypsum systems"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Commercial Solutions</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   Large-scale projects demand reliability and efficiency. Our commercial expertise ensures on-time delivery, minimal disruption, and professional-grade results.
@@ -399,11 +453,20 @@ export default function HomePage() {
         {/* Testimonials Section */}
         <section className="py-20 sm:py-32 bg-background border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">What Our Clients Say</h2>
-              <p className="text-lg text-muted-foreground max-w-3xl">
-                Trusted by industry leaders across residential and commercial sectors
-              </p>
+            <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
+              <div>
+                <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">What Our Clients Say</h2>
+                <p className="text-lg text-muted-foreground max-w-3xl">
+                  Trusted by industry leaders across residential and commercial sectors
+                </p>
+              </div>
+              <div className="h-56 overflow-hidden rounded-lg border border-border bg-muted">
+                <img
+                  src={sectionImages.testimonials}
+                  alt="Minimal luxury interior finished with smooth gypsum walls"
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -446,7 +509,14 @@ export default function HomePage() {
         </section>
 
         {/* Industries We Serve */}
-        <section className="py-20 sm:py-32 bg-card border-t border-border">
+        <section className="relative overflow-hidden py-20 sm:py-32 bg-card border-t border-border">
+          <div className="absolute inset-y-0 right-0 hidden w-1/3 opacity-10 lg:block">
+            <img
+              src={sectionImages.industries}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16">
               <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Industries We Serve</h2>
@@ -482,9 +552,18 @@ export default function HomePage() {
         {/* Stats Section */}
         <section className="py-20 sm:py-32 bg-background border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">By The Numbers</h2>
-              <p className="text-lg text-muted-foreground">Proven track record of excellence and reliability</p>
+            <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+              <div className="h-64 overflow-hidden rounded-lg border border-border bg-muted">
+                <img
+                  src={sectionImages.stats}
+                  alt="Construction worker applying gypsum plaster finish"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">By The Numbers</h2>
+                <p className="text-lg text-muted-foreground">Proven track record of excellence and reliability</p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -509,10 +588,14 @@ export default function HomePage() {
 
         {/* CTA Section */}
         <section className="py-24 sm:py-32 bg-primary text-primary-foreground relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 opacity-25">
+            <img
+              src={sectionImages.cta}
+              alt=""
+              className="h-full w-full object-cover"
+            />
           </div>
+          <div className="absolute inset-0 bg-primary/80"></div>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div className="max-w-3xl mx-auto">
