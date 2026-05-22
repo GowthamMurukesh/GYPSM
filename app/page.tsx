@@ -12,6 +12,7 @@ import { Service, SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
 
 const HOME_HERO_IMAGE = '/images/hero-plastering.jpg';
+const CONTACT_HERO_IMAGE = '/images/hero-contact.jpg';
 const sectionImages = {
   quality: '/images/interior-finish.jpg',
   support: '/images/commercial-project.jpg',
@@ -65,26 +66,29 @@ export default function HomePage() {
 
   return (
     <>
-      <Header  />
+      <Header />
       <main className="flex flex-col min-h-screen">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-28 sm:py-44 text-foreground">
-          <div className="absolute inset-0 opacity-60">
-            <img
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(181,144,90,0.18),_transparent_28%),linear-gradient(180deg,#f8f1e6_0%,#f0e3d6_100%)] py-28 sm:py-44 text-foreground flex">
+          <div className="absolute inset-0 opacity-60 border-red-800">
+            {/* <img
               src={site.home.heroImage || HOME_HERO_IMAGE}
               alt=""
               className="h-full w-full object-cover grayscale blur-sm"
-            />
+            /> */}
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white/95 dark:from-transparent dark:via-black/10 dark:to-black/90"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
               <div className="mb-8 inline-block opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-                <span className="rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent shadow-sm shadow-accent/10">
+                <span className="rounded-full border border-transparent bg-orange-500 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-sm shadow-orange-500/20">
                   {site.home.heroBadge}
                 </span>
               </div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-[-0.03em] opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+              <h1
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-[-0.03em] text-sky-800 opacity-0 animate-fadeInUp"
+                style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
+              >
                 {site.home.heroTitle}
               </h1>
               <p className="text-lg sm:text-xl mb-12 max-w-2xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
@@ -94,7 +98,7 @@ export default function HomePage() {
                 <Link href="/contact">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto rounded-full bg-accent px-8 py-4 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/90"
+                    className="w-full sm:w-auto rounded-full border border-foreground/10 bg-sky-800 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:text-white"
                   >
                     {site.home.primaryCtaLabel}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -104,21 +108,32 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto rounded-full border border-foreground/10 bg-white/90 px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
+                    className="w-full sm:w-auto rounded-full border border-foreground/10 bg-sky-800 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:border-accent hover:text-accent"
                   >
                     {site.home.secondaryCtaLabel}
                   </Button>
                 </Link>
               </div>
+           
             </div>
           </div>
+          <div className="opacity-0 animate-fadeInUp w-[calc(100%_-_2rem)]" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+                <div className="relative h-[520px] overflow-hidden border border-border bg-muted shadow-2xl shadow-black/10">
+                  <img
+                    src={site.home.heroImage || HOME_HERO_IMAGE}
+                    alt="Hero image"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
+                </div>
+           </div>
         </section>
 
         {/* Why Choose Us Section */}
         <section className="py-20 sm:py-32 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">{site.home.whyTitle}</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-sky-800">{site.home.whyTitle}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 {site.home.whySubtitle}
               </p>
@@ -136,7 +151,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Leaf className="h-7 w-7 text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold mb-3 text-foreground">100% Premium Quality</h3>
+                <h3 className="text-lg font-semibold mb-3 text-foreground text-sky-800">100% Premium Quality</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   We use only the finest materials meeting all industry standards for superior durability.
                 </p>
@@ -153,7 +168,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Truck className="h-7 w-7 text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold mb-3 text-foreground">24/7 Support</h3>
+                <h3 className="text-lg font-semibold mb-3 text-foreground text-sky-800">24/7 Support</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Our dedicated team is always available when you need us, ensuring seamless project delivery.
                 </p>
@@ -170,7 +185,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
                   <Award className="h-7 w-7 text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold mb-3 text-foreground">Trusted Excellence</h3>
+                <h3 className="text-lg font-semibold mb-3 text-foreground text-sky-800">Trusted Excellence</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Industry-leading standards and proven expertise ensuring exceptional results every time.
                 </p>
@@ -183,16 +198,16 @@ export default function HomePage() {
         <section className="py-20 sm:py-32 bg-card border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">{site.home.benefitsTitle}</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-sky-800">{site.home.benefitsTitle}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 {site.home.benefitsSubtitle}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&h=300&fit=crop&q=80" alt="Time Saving" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&h=300&fit=crop&q=80" alt="Time Saving" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Zap className="h-8 w-8 text-white" />
@@ -202,9 +217,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop&q=80" alt="Less Wastage" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg  opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop&q=80" alt="Less Wastage" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Droplet className="h-8 w-8 text-white" />
@@ -214,9 +229,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.3s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&h=300&fit=crop&q=80" alt="High Durability" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&h=300&fit=crop&q=80" alt="High Durability" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Shield className="h-8 w-8 text-white" />
@@ -228,9 +243,9 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.4s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1576021160550-112173f7f869?w=500&h=300&fit=crop&q=80" alt="Eco-Friendly" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg  opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1576021160550-112173f7f869?w=500&h=300&fit=crop&q=80" alt="Eco-Friendly" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Leaf className="h-8 w-8 text-white" />
@@ -240,9 +255,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.5s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop&q=80" alt="Cost Effective" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg opacity-0 animate-fadeInUp" style={{ animationDelay: '0.5s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop&q=80" alt="Cost Effective" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Clock className="h-8 w-8 text-white" />
@@ -252,9 +267,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border border-border opacity-0 animate-fadeInUp" style={{animationDelay: '0.6s', animationFillMode: 'forwards', minHeight: '300px'}}>
-                <img src="https://images.unsplash.com/photo-1565182409498-7207267562da?w=500&h=300&fit=crop&q=80" alt="Sound Control" className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="relative overflow-hidden rounded-lg  opacity-0 animate-fadeInUp" style={{ animationDelay: '0.6s', animationFillMode: 'forwards', minHeight: '300px' }}>
+                <img src="https://images.unsplash.com/photo-1565182409498-7207267562da?w=500&h=300&fit=crop&q=80" alt="Sound Control" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Volume2 className="h-8 w-8 text-white" />
@@ -268,10 +283,10 @@ export default function HomePage() {
         </section>
 
         {/* Product Showcase */}
-        <section className="py-20 sm:py-32 bg-background border-t border-border">
+        <section className="py-20 sm:py-32 bg-background bg-orange-500 border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">{site.home.productsTitle}</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-white">{site.home.productsTitle}</h2>
               <p className="text-lg text-muted-foreground max-w-3xl">
                 {site.home.productsSubtitle}
               </p>
@@ -288,7 +303,7 @@ export default function HomePage() {
                     <div
                       key={service.id}
                       className="overflow-hidden rounded-lg border border-border bg-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-0 animate-fadeInUp"
-                      style={{animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards'}}
+                      style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards' }}
                     >
                       <div className="h-56 bg-muted overflow-hidden relative">
                         <img
@@ -324,14 +339,14 @@ export default function HomePage() {
         <section className="py-20 sm:py-32 bg-background border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">{site.home.solutionsTitle}</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-sky-800">{site.home.solutionsTitle}</h2>
               <p className="text-lg text-muted-foreground max-w-3xl">
                 {site.home.solutionsSubtitle}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
+              <div className="opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
                 <div className="mb-8 h-72 overflow-hidden rounded-lg border border-border bg-muted">
                   <img
                     src={sectionImages.residential}
@@ -359,7 +374,7 @@ export default function HomePage() {
                 </ul>
               </div>
 
-              <div className="opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+              <div className="opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 <div className="mb-8 h-72 overflow-hidden rounded-lg border border-border bg-muted">
                   <img
                     src={sectionImages.commercial}
@@ -390,7 +405,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Client Case Studies Section */}
+        {/* Client Case Studies Section
         <section className="py-20 sm:py-32 bg-card border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16">
@@ -427,7 +442,7 @@ export default function HomePage() {
                 <div
                   key={index}
                   className="bg-background rounded-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-0 animate-fadeInUp"
-                  style={{animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards'}}
+                  style={{ animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards' }}
                 >
                   <div className="h-48 bg-muted overflow-hidden">
                     <img
@@ -451,7 +466,7 @@ export default function HomePage() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 sm:py-32 bg-background border-t border-border">
+        {/* <section className="py-20 sm:py-32 bg-background border-t border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
               <div>
@@ -495,7 +510,7 @@ export default function HomePage() {
                 <div
                   key={index}
                   className="p-8 bg-card rounded-lg border border-border opacity-0 animate-fadeInUp"
-                  style={{animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards'}}
+                  style={{ animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards' }}
                 >
                   <p className="text-muted-foreground italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
                   <div>
@@ -506,7 +521,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */ }
 
         {/* Industries We Serve */}
         <section className="relative overflow-hidden py-20 sm:py-32 bg-card border-t border-border">
@@ -519,7 +534,7 @@ export default function HomePage() {
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Industries We Serve</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-sky-800">Industries We Serve</h2>
               <p className="text-lg text-muted-foreground max-w-3xl">
                 Specialized expertise across diverse sectors and project types
               </p>
@@ -539,7 +554,7 @@ export default function HomePage() {
                 <div
                   key={index}
                   className="p-6 bg-background rounded-lg border border-border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-center opacity-0 animate-fadeInUp"
-                  style={{animationDelay: `${0.1 + index * 0.05}s`, animationFillMode: 'forwards'}}
+                  style={{ animationDelay: `${0.1 + index * 0.05}s`, animationFillMode: 'forwards' }}
                 >
                   <h3 className="font-semibold text-foreground mb-2">{industry.name}</h3>
                   <p className="text-sm text-muted-foreground">{industry.description}</p>
@@ -561,7 +576,7 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">By The Numbers</h2>
+                <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground text-sky-800">By The Numbers</h2>
                 <p className="text-lg text-muted-foreground">Proven track record of excellence and reliability</p>
               </div>
             </div>
@@ -576,7 +591,7 @@ export default function HomePage() {
                 <div
                   key={index}
                   className="text-center p-8 rounded-lg bg-card border border-border opacity-0 animate-fadeInUp"
-                  style={{animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards'}}
+                  style={{ animationDelay: `${0.1 + index * 0.1}s`, animationFillMode: 'forwards' }}
                 >
                   <div className="text-5xl font-bold text-accent mb-2">{stat.number}</div>
                   <p className="text-foreground font-semibold">{stat.label}</p>
@@ -598,32 +613,38 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary/80"></div>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-                {site.home.ctaTitle}
-              </h2>
-              <p className="text-lg sm:text-xl opacity-90 mb-10 font-light leading-relaxed">
-                {site.home.ctaSubtitle}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/contact">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
-                  >
-                    {site.home.ctaPrimaryLabel}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/services">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-primary-foreground/40 text-primary-foreground hover:bg-white/10 transition-all duration-300"
-                  >
-                    {site.home.ctaSecondaryLabel}
-                  </Button>
-                </Link>
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
+              <div>
+                <span
+                  className="inline-flex rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 mb-6 opacity-0 animate-fadeInUp"
+                  style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
+                >
+                  Contact
+                </span>
+                <h1
+                  className="text-4xl sm:text-5xl font-bold mb-4 leading-tight opacity-0 animate-fadeInUp"
+                  style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
+                >
+                  {site.contactPage.heroTitle}
+                </h1>
+                <p
+                  className="text-lg max-w-2xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp"
+                  style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
+                >
+                  {site.contactPage.heroSubtitle}
+                </p>
+              </div>
+
+              <div
+                className="relative h-72 rounded-[2rem] overflow-hidden border border-border bg-muted shadow-2xl shadow-black/10 opacity-0 animate-fadeInUp"
+                style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
+              >
+                <img
+                  src={site.contactPage.heroImage || CONTACT_HERO_IMAGE}
+                  alt="Contact hero"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
               </div>
             </div>
           </div>
