@@ -28,6 +28,11 @@ export const defaultSiteContent: SiteContent = {
       'Get a free consultation and personalized quote. Our expert team is ready to bring your vision to life with superior quality and professional service.',
     ctaPrimaryLabel: 'Get Free Quote',
     ctaSecondaryLabel: 'View Products',
+    announcement: {
+      enabled: true,
+      title: 'Special Offer',
+      message: 'Welcome! Click here to contact us for a free quote and priority service.',
+    },
   },
   about: {
     heroImage: '/images/interior-finish.jpg',
@@ -62,7 +67,11 @@ export function mergeSiteContent(raw: Record<string, unknown> | undefined): Site
     ...(typeof raw[key] === 'object' && raw[key] !== null ? (raw[key] as T) : {}),
   });
   return {
-    home: pick(defaultSiteContent.home, 'home'),
+    // ensure announcement merges
+    home: {
+      ...pick(defaultSiteContent.home, 'home'),
+      ...(typeof raw['home'] === 'object' && raw['home'] !== null && (raw['home'] as any).announcement ? { announcement: (raw['home'] as any).announcement } : {}),
+    },
     about: pick(defaultSiteContent.about, 'about'),
     servicesPage: pick(defaultSiteContent.servicesPage, 'servicesPage'),
     contactPage: pick(defaultSiteContent.contactPage, 'contactPage'),

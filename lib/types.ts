@@ -89,6 +89,11 @@ export interface SiteHomeContent {
   ctaSubtitle: string;
   ctaPrimaryLabel: string;
   ctaSecondaryLabel: string;
+  announcement?: {
+    enabled?: boolean;
+    title?: string;
+    message?: string;
+  };
 }
 
 export interface SiteAboutHeroContent {

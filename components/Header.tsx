@@ -25,7 +25,7 @@ export function Header({ className }: HeaderProps) {
   ];
 
   return (
-    <header className={cn('sticky top-0 z-50  bg-background/95 backdrop-blur-lg shadow-sm', className)}>
+    <header className={cn('sticky top-0 z-50  bg-white shadow-sm', className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
@@ -42,7 +42,7 @@ export function Header({ className }: HeaderProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-sky-800 no-underline transition-colors hover:text-orange-500 hover:underline"
+                className="text-sm font-medium text-blue-800 no-underline transition-colors hover:text-orange-500 hover:underline"
               >
                 {link.label}
               </Link>
@@ -66,7 +66,7 @@ export function Header({ className }: HeaderProps) {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2  border-sky-800 px-4 py-2 text-sm font-medium text-sky-800 transition hover:border-orange-500 hover:text-orange-500"
+                className="inline-flex items-center gap-2  border-blue-800 px-4 py-2 text-sm font-medium text-blue-800 transition hover:border-orange-500 hover:text-orange-500"
               >
                 <LogIn className="h-4 w-4" />
                 <span className="hidden sm:inline">Login</span>
@@ -96,7 +96,7 @@ export function Header({ className }: HeaderProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-xl px-4 py-2 text-sm font-medium text-sky-800 no-underline transition hover:bg-accent/10 hover:text-orange-500 hover:no-underline"
+                  className="rounded-xl px-4 py-2 text-sm font-medium text-blue-800 no-underline transition hover:bg-accent/10 hover:text-orange-500 hover:no-underline"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -105,7 +105,7 @@ export function Header({ className }: HeaderProps) {
               {user && userProfile && (
                 <Link
                   href="/admin"
-                  className="rounded-xl px-4 py-2 text-sm font-medium text-sky-800 transition hover:bg-accent/10 hover:text-orange-500"
+                  className="rounded-xl px-4 py-2 text-sm font-medium text-blue-800 transition hover:bg-accent/10 hover:text-orange-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Admin Panel
