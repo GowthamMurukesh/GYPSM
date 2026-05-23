@@ -108,7 +108,7 @@ export default function PageEditor() {
         pageData.createdBy = userProfile?.id || 'unknown';
       }
 
-      await savePageContent(page.slug, pageData);
+      await savePageContent(page.slug, pageData, isNew ? undefined : pageId);
       router.push('/admin/pages');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error saving page';

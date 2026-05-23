@@ -6,12 +6,12 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background bg-orange-500 text-foreground">
+    <footer className="bg-background bg-blue-800 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 mb-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-base font-semibold uppercase tracking-[0.24em] mb-4 text-foreground/90 text-white">Royal Gypsum</h3>
+            <h3 className="text-base font-semibold uppercase tracking-[0.24em] mb-4 text-white">Royal Gypsum</h3>
             <p className="text-sm text-muted-foreground leading-relaxed text-white">
               Premium gypsum plastering services crafted for modern residential and commercial spaces.
             </p>
@@ -19,7 +19,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4 text-foreground/80 text-white">Navigation</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4  text-white">Navigation</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/" className="hover:text-accent transition-colors text-white">
@@ -46,7 +46,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4 text-foreground/80 text-white">Services</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4 text-white">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-accent transition-colors text-white">
@@ -73,7 +73,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4 text-foreground/80 text-white">Contact Info</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] mb-4 text-white">Contact Info</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a

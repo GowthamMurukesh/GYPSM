@@ -125,21 +125,31 @@ export async function getAllPages(includeUnpublished = false): Promise<PageConte
   })) as PageContent[];
 }
 
+function stripUndefinedFields<T extends Record<string, unknown>>(data: T): T {
+  return Object.fromEntries(Object.entries(data).filter(([, value]) => value !== undefined)) as T;
+}
+
 export async function savePageContent(
   slug: string,
-  content: Omit<PageContent, 'id' | 'createdAt' | 'updatedAt'>
+  content: Omit<PageContent, 'id' | 'createdAt' | 'updatedAt'>,
+  existingId?: string
 ): Promise<string> {
   const pagesRef = collection(db, 'pages');
-  const q = query(pagesRef, where('slug', '==', slug));
-  const snapshot = await getDocs(q);
-
   const pageData: Omit<PageContent, 'id' | 'createdAt' | 'updatedAt'> & {
     createdAt?: Timestamp;
     updatedAt: Timestamp;
-  } = {
+  } = stripUndefinedFields({
     ...content,
     updatedAt: Timestamp.now(),
-  };
+  });
+
+  if (existingId) {
+    await updateDoc(doc(db, 'pages', existingId), pageData);
+    return existingId;
+  }
+
+  const q = query(pagesRef, where('slug', '==', slug));
+  const snapshot = await getDocs(q);
 
   if (snapshot.empty) {
     // Create new page
@@ -185,10 +195,10 @@ export async function saveService(
   const serviceData: Omit<Service, 'id' | 'createdAt' | 'updatedAt'> & {
     createdAt?: Timestamp;
     updatedAt: Timestamp;
-  } = {
+  } = stripUndefinedFields({
     ...service,
     updatedAt: Timestamp.now(),
-  };
+  });
 
   if (!id) {
     // Create new service

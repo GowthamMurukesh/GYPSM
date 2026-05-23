@@ -24,6 +24,7 @@ export default function SiteEditorPage() {
     content: '',
     published: true,
   });
+  const [aboutPageId, setAboutPageId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -35,6 +36,7 @@ export default function SiteEditorPage() {
         const [s, page] = await Promise.all([getSiteContent(), getPageBySlugForEdit('about')]);
         setSite(s);
         if (page) {
+          setAboutPageId(page.id);
           setAboutBody({
             title: page.title,
             description: page.description,
@@ -112,15 +114,19 @@ export default function SiteEditorPage() {
     try {
       const { saveSiteSection, savePageContent } = await import('@/lib/firebaseUtils');
       await saveSiteSection('about', site.about, uid);
-      await savePageContent('about', {
-        slug: 'about',
-        title: aboutBody.title,
-        description: aboutBody.description,
-        content: aboutBody.content,
-        createdBy: uid,
-        updatedBy: uid,
-        published: aboutBody.published,
-      });
+      await savePageContent(
+        'about',
+        {
+          slug: 'about',
+          title: aboutBody.title,
+          description: aboutBody.description,
+          content: aboutBody.content,
+          createdBy: uid,
+          updatedBy: uid,
+          published: aboutBody.published,
+        },
+        aboutPageId || undefined
+      );
       setMessage('About hero and page content saved.');
     } catch (e) {
       setMessage(e instanceof Error ? e.message : 'Save failed');
