@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, LogIn } from 'lucide-react';
+import { Menu, X, LogIn, LayoutDashboard } from 'lucide-react';
 import { useAuthStore } from '@/lib/authStore';
 import { cn } from '@/lib/utils';
 
@@ -24,123 +24,312 @@ export function Header({ className }: HeaderProps) {
   ];
 
   return (
-    <header className={cn(
-      'sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm',
-      className
-    )}>
-      <div className="w-full px-3 sm:px-5 lg:px-8">
-        <div className="flex h-[70px] sm:h-[85px] md:h-[95px] items-center">
-          {/* Logo — far left */}
-          <Link href="/" className="flex items-center shrink-0">
-            <img
-              src={Logoimage}
-              alt="Royal Gypsum Logo"
-              className="h-16 sm:h-26 md:h-20 lg:h-24 w-auto object-contain"
-            />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Jost:wght@300;400;500;600&display=swap');
+
+        /* ════════════════════════════════════════
+           SHELL
+        ════════════════════════════════════════ */
+        .rg-header {
+          position: sticky; top: 0; z-index: 50;
+          background: #ffffff;
+          border-bottom: 1px solid #e0e7ff;
+          font-family: 'Jost', sans-serif;
+        }
+
+        .rg-header-inner {
+          max-width: 1200px; margin: 0 auto;
+          padding: 0 1.5rem;
+          display: flex; align-items: center;
+          height: 76px;
+          gap: 0;
+        }
+
+        /* ════════════════════════════════════════
+           LOGO
+        ════════════════════════════════════════ */
+        .rg-logo {
+          display: flex; flex-direction: column;
+          text-decoration: none; flex-shrink: 0;
+          margin-right: auto;          /* pushes everything right on mobile */
+        }
+        .rg-logo img {
+          height: 56px; width: auto;
+          object-fit: contain; display: block;
+        }
+        .rg-logo-rule {
+          display: block; width: 2rem; height: 2px; margin-top: 2px;
+          background: linear-gradient(90deg, #f97316, #fb923c);
+        }
+
+        /* ════════════════════════════════════════
+           DESKTOP NAV  (≥ 900 px)
+        ════════════════════════════════════════ */
+        .rg-nav {
+          display: none;               /* hidden by default; shown at lg */
+          align-items: center; gap: 0;
+          margin: 0 1.5rem;
+        }
+        .rg-nav-link {
+          position: relative;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.75rem; font-weight: 500;
+          letter-spacing: 0.13em; text-transform: uppercase;
+          color: #1e3a8a; text-decoration: none;
+          padding: 0.55rem 0.85rem;
+          white-space: nowrap;
+          transition: color 0.2s ease;
+        }
+        .rg-nav-link::after {
+          content: '';
+          position: absolute; bottom: 0; left: 0.85rem; right: 0.85rem;
+          height: 2px;
+          background: linear-gradient(90deg, #f97316, #fb923c);
+          transform: scaleX(0); transform-origin: center;
+          transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+        }
+        .rg-nav-link:hover { color: #f97316; }
+        .rg-nav-link:hover::after { transform: scaleX(1); }
+
+        /* ════════════════════════════════════════
+           DESKTOP AUTH  (≥ 900 px)
+        ════════════════════════════════════════ */
+        .rg-desktop-auth {
+          display: none;               /* hidden by default; shown at lg */
+          align-items: center; gap: 0.6rem; flex-shrink: 0;
+          margin-left: auto;           /* always pins to the right edge */
+        }
+
+        /* shared button base */
+        .rg-btn {
+          display: inline-flex; align-items: center; gap: 0.4rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.7rem; font-weight: 600;
+          letter-spacing: 0.16em; text-transform: uppercase;
+          text-decoration: none; border: none; cursor: pointer;
+          border-radius: 2px; white-space: nowrap;
+          transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .rg-btn-sm  { padding: 0.55rem 1.1rem; }
+        .rg-btn-md  { padding: 0.65rem 1.4rem; }
+
+        .rg-btn-orange {
+          background: #f97316; color: #fff;
+        }
+        .rg-btn-orange:hover { background: #1e3a8a; transform: translateY(-1px); }
+
+        .rg-btn-navy {
+          background: #1e40af; color: #fff;
+        }
+        .rg-btn-navy:hover { background: #f97316; transform: translateY(-1px); }
+
+        .rg-user-chip {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 0.95rem; font-weight: 600; font-style: italic;
+          color: #1e3a8a;
+          padding: 0.45rem 0.9rem;
+          border: 1px solid #e0e7ff; border-radius: 2px;
+          white-space: nowrap; max-width: 140px;
+          overflow: hidden; text-overflow: ellipsis;
+        }
+
+        /* ════════════════════════════════════════
+           HAMBURGER  (< 900 px)
+        ════════════════════════════════════════ */
+        .rg-hamburger {
+          display: flex;               /* always flex; hidden via lg rule below */
+          align-items: center; justify-content: center;
+          width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+          border: 1px solid #e0e7ff; border-radius: 2px;
+          background: transparent; cursor: pointer; color: #1e3a8a;
+          transition: border-color 0.2s ease, color 0.2s ease;
+          margin-left: 0.75rem;
+        }
+        .rg-hamburger:hover { border-color: #f97316; color: #f97316; }
+
+        /* ════════════════════════════════════════
+           MOBILE DRAWER
+        ════════════════════════════════════════ */
+        .rg-mobile-nav {
+          border-top: 1px solid #e0e7ff;
+          background: #fff;
+          padding: 1rem 1.5rem 1.5rem;
+          display: flex; flex-direction: column; gap: 0;
+        }
+
+        .rg-mobile-link {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.78rem; font-weight: 500;
+          letter-spacing: 0.14em; text-transform: uppercase;
+          color: #1e3a8a; text-decoration: none;
+          padding: 0.8rem 0.75rem;
+          border-left: 2px solid transparent;
+          transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+          border-radius: 0 2px 2px 0;
+        }
+        .rg-mobile-link:hover {
+          color: #f97316; border-left-color: #f97316;
+          background: #fff7f0;
+        }
+
+        .rg-mobile-divider { height: 1px; background: #e0e7ff; margin: 0.75rem 0; }
+
+        .rg-mobile-actions {
+          display: flex; flex-direction: column; gap: 0.5rem;
+        }
+
+        .rg-mobile-btn {
+          display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+          padding: 0.9rem 1.5rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.72rem; font-weight: 600;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          text-decoration: none; border-radius: 2px;
+          transition: background 0.25s ease, transform 0.2s ease;
+        }
+        .rg-mobile-btn-orange { background: #f97316; color: #fff; }
+        .rg-mobile-btn-orange:hover { background: #1e3a8a; }
+        .rg-mobile-btn-navy   { background: #1e40af; color: #fff; }
+        .rg-mobile-btn-navy:hover   { background: #f97316; }
+
+        .rg-mobile-user {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 1rem; font-weight: 600; font-style: italic;
+          color: #1e3a8a; text-align: center;
+          padding: 0.6rem 1rem;
+          border: 1px solid #e0e7ff; border-radius: 2px;
+        }
+
+        /* ════════════════════════════════════════
+           BREAKPOINTS
+        ════════════════════════════════════════ */
+
+        /* 480 px — slightly larger logo */
+        @media (min-width: 480px) {
+          .rg-logo img { height: 60px; }
+          .rg-header-inner { padding: 0 2rem; }
+        }
+
+        /* 900 px — show desktop nav + auth, hide hamburger */
+        @media (min-width: 900px) {
+          .rg-logo { margin-right: 0; }
+          .rg-nav  { display: flex; }
+          .rg-desktop-auth { display: flex; }
+          .rg-hamburger { display: none; }
+          .rg-header-inner { height: 80px; }
+          .rg-logo img { height: 64px; }
+        }
+
+        /* 1024 px — slightly more nav padding */
+        @media (min-width: 1024px) {
+          .rg-nav-link { padding: 0.55rem 1rem; font-size: 0.78rem; }
+          .rg-nav-link::after { left: 1rem; right: 1rem; }
+          .rg-nav { margin: 0 2rem; }
+        }
+
+        /* force hide mobile nav on desktop regardless of state */
+        @media (min-width: 900px) {
+          .rg-mobile-nav { display: none !important; }
+        }
+      `}</style>
+
+      <header className={cn('rg-header', className)}>
+        <div className="rg-header-inner">
+
+          {/* ── Logo ── */}
+          <Link href="/" className="rg-logo">
+            <img src={Logoimage} alt="Royal Gypsum Logo" />
+            <span className="rg-logo-rule" />
           </Link>
 
-          {/* Spacer */}
-          <div className="ml-6 lg:ml-10" />
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-2 mr-auto">
+          {/* ── Desktop nav ── */}
+          <nav className="rg-nav" aria-label="Main navigation">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="
-                  relative text-[15px] lg:text-[16px] font-light text-blue-900
-                  px-4 py-2 no-underline tracking-wide
-                  transition-colors duration-200 hover:text-orange-500
-                  after:content-[''] after:absolute after:left-4 after:right-4 after:bottom-0
-                  after:h-[2px] after:bg-orange-500 after:scale-x-0
-                  after:transition-transform after:duration-200 after:origin-center
-                  hover:after:scale-x-100
-                "
-              >
+              <Link key={link.href} href={link.href} className="rg-nav-link">
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Login — far right (desktop) */}
-          <div className="hidden md:flex items-center shrink-0 ml-3">
+          {/* ── Desktop auth ── */}
+          <div className="rg-desktop-auth">
             {user && userProfile ? (
-              <div className="flex items-center gap-3">
-                <span className="flex items-center rounded-full border border-blue-200 px-4 py-2 text-[15px] font-medium text-blue-900">
+              <>
+                <span className="rg-user-chip" title={userProfile.displayName}>
                   {userProfile.displayName}
                 </span>
-                <Link
-                  href="/admin"
-                  className="flex items-center rounded-full bg-blue-900 px-5 py-2.5 text-[15px] font-light text-white transition-all duration-200 hover:bg-orange-500"
-                >
+                <Link href="/admin" className="rg-btn rg-btn-sm rg-btn-navy">
+                  <LayoutDashboard size={13} />
                   Dashboard
                 </Link>
-              </div>
+              </>
             ) : (
-              <Link
-                href="/login"
-                className="flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-[15px] font-light text-white transition-all duration-200 hover:bg-blue-800"
-              >
-                <LogIn className="w-5 h-5" />
+              <Link href="/login" className="rg-btn rg-btn-md rg-btn-orange">
+                <LogIn size={13} />
                 Login
               </Link>
             )}
           </div>
 
-          {/* Mobile: hamburger */}
+          {/* ── Hamburger ── */}
           <button
-            className="flex md:hidden items-center justify-center w-10 h-10 rounded-lg border border-gray-200 text-blue-900 transition-all duration-200 hover:border-orange-500 hover:text-orange-500"
+            type="button"
+            className="rg-hamburger"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
+            aria-controls="rg-mobile-nav"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
-
         </div>
 
-        {/* Mobile Nav */}
+        {/* ── Mobile drawer ── */}
         {mobileMenuOpen && (
-          <nav className="border-t border-gray-200 py-4 md:hidden">
-            <div className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="
-                    relative px-4 py-3 text-[15px] font-light tracking-wide
-                    text-blue-900 no-underline transition-colors duration-200
-                    hover:text-orange-500 border-l-2 border-transparent
-                    hover:border-orange-500
-                  "
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="h-px bg-gray-200 my-2" />
-              {!user ? (
+          <nav id="rg-mobile-nav" className="rg-mobile-nav" aria-label="Mobile navigation">
+
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rg-mobile-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <div className="rg-mobile-divider" />
+
+            <div className="rg-mobile-actions">
+              {user && userProfile ? (
+                <>
+                  <span className="rg-mobile-user">{userProfile.displayName}</span>
+                  <Link
+                    href="/admin"
+                    className="rg-mobile-btn rg-mobile-btn-navy"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <LayoutDashboard size={14} />
+                    Admin Panel
+                  </Link>
+                </>
+              ) : (
                 <Link
                   href="/login"
-                  className="flex items-center justify-center gap-2 rounded-lg bg-blue-900 px-4 py-3 text-[15px] font-light text-white hover:bg-orange-500 transition-all duration-200"
+                  className="rg-mobile-btn rg-mobile-btn-orange"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <LogIn className="w-5 h-5" />
+                  <LogIn size={14} />
                   Login
-                </Link>
-              ) : userProfile && (
-                <Link
-                  href="/admin"
-                  className="flex items-center justify-center rounded-lg bg-blue-900 px-4 py-3 text-[15px] font-light text-white hover:bg-orange-500 transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Admin Panel
                 </Link>
               )}
             </div>
+
           </nav>
         )}
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
