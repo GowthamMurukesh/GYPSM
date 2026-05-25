@@ -93,10 +93,10 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-white/95"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
-              <div className="mb-8 inline-flex rounded-full border border-accent/20 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <div className="mb-8 inline-flex rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent shadow-sm shadow-accent/10 opacity-0 animate-fadeInUp text-white" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
                 {site.about.heroBadge}
               </div>
-              <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+              <h1 className="text-5xl text-[#130CB7] sm:text-6xl font-bold mb-6 leading-tight opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 {site.about.heroTitle}
               </h1>
               <p className="text-lg sm:text-xl max-w-3xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
@@ -112,17 +112,20 @@ export default function AboutPage() {
             {loading ? (
               <p className="text-center text-muted-foreground">Loading page content...</p>
             ) : page ? (
-              <div className="max-w-4xl mx-auto">
-                <div className="mb-8 h-80 overflow-hidden rounded-lg border border-border bg-muted opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
+              <div className="max-w-6xl mx-auto">
+                {/* <div className="mb-8 h-80 overflow-hidden rounded-lg border border-border bg-muted opacity-0 animate-fadeInUp" style={{animationDelay: '0.1s', animationFillMode: 'forwards'}}>
                   <img
                     src={aboutSectionImages.story}
                     alt="Professional gypsum plastering team applying a smooth wall finish"
                     className="h-full w-full object-cover"
                   />
-                </div>
-                <div className="bg-card rounded-lg border border-border p-8 md:p-16 opacity-0 animate-fadeInUp" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+                </div> */}
+                <div className="bg-card rounded-lg  md:opacity-0 animate-fadeInUp" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                   <div className="prose prose-sm md:prose-base max-w-none">
-                    <style>{`
+                    <p className="text-lg sm:text-xl max-w-3xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+                      {site.about.heroSubtitle}
+                    </p>
+                    {/* <style>{`
                       .prose h2 {
                         @apply text-3xl font-bold text-foreground mt-10 mb-4;
                       }
@@ -138,8 +141,8 @@ export default function AboutPage() {
                       .prose li {
                         @apply text-muted-foreground;
                       }
-                    `}</style>
-                    <div dangerouslySetInnerHTML={{ __html: page.content }} />
+                    `}</style> */}
+                    {/* <div dangerouslySetInnerHTML={{ __html: page.content }} /> */}
                   </div>
                 </div>
 
@@ -164,7 +167,7 @@ export default function AboutPage() {
                       <div
                         key={i}
                         className="text-center p-8 rounded-lg border border-border bg-card hover:shadow-lg transition-all duration-300 opacity-0 animate-fadeInUp"
-                        style={{animationDelay: `${0.3 + i * 0.1}s`, animationFillMode: 'forwards'}}
+                        style={{ animationDelay: `${0.3 + i * 0.1}s`, animationFillMode: 'forwards' }}
                       >
                         <div className="text-4xl font-bold text-accent mb-3">{stat.number}</div>
                         <p className="text-foreground font-semibold">{stat.label}</p>
@@ -181,7 +184,7 @@ export default function AboutPage() {
                       <div
                         key={i}
                         className="text-center p-8 rounded-lg border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-2 opacity-0 animate-fadeInUp"
-                        style={{animationDelay: `${0.6 + i * 0.1}s`, animationFillMode: 'forwards'}}
+                        style={{ animationDelay: `${0.6 + i * 0.1}s`, animationFillMode: 'forwards' }}
                       >
                         <div className="w-28 h-28 mx-auto mb-4 overflow-hidden rounded-full bg-muted ring-4 ring-accent/10">
                           <img

@@ -41,6 +41,7 @@ export default function HomePage() {
   const [services, setServices] = useState<Service[]>([]);
   const [site, setSite] = useState<SiteContent>(defaultSiteContent);
   const [loading, setLoading] = useState(true);
+  const [typedSubtitle, setTypedSubtitle] = useState('');
 
   useEffect(() => {
     // Initialize auth on component mount
@@ -88,12 +89,12 @@ export default function HomePage() {
                 </span>
               </div>
               <h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-[-0.03em] text-blue-800 opacity-0 animate-fadeInUp"
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-[-0.03em] text-blue-800 opacity-0 animate-fadeInUp bg-[linear-gradient(135deg,_#130CB7_100%,_#52E5E7_50%)] bg-clip-text text-transparent"
                 style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
               >
                 {site.home.heroTitle}
               </h1>
-              <p className="text-lg sm:text-xl mb-12 max-w-2xl font-light leading-relaxed text-muted-foreground opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+              <p className="text-lg sm:text-xl mb-12 max-w-2xl font-light leading-relaxed text-black opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                 {site.home.heroSubtitle}
               </p>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
@@ -116,7 +117,7 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-           
+
             </div>
           </div>
           {/* <div className="opacity-0 animate-fadeInUp w-[calc(100%_-_2rem)]" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
@@ -132,68 +133,74 @@ export default function HomePage() {
         </section>
 
         {/* Why Choose Us Section */}
-        <section className="py-20 sm:py-32 bg-orange-500">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">{site.home.whyTitle}</h2>
-              <p className="text-lg text-white max-w-2xl mx-auto">
-                {site.home.whySubtitle}
-              </p>
-            </div>
+        <section className="py-20 sm:py-32 bg-[linear-gradient(135deg,_#130CB7_100%)]">          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">{site.home.whyTitle}</h2>
+            <p className="text-lg text-white max-w-2xl mx-auto">
+              {site.home.whySubtitle}
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="p-4 bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
-                  <img
-                    src={sectionImages.quality}
-                    alt="Smooth premium gypsum wall finish"
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                <img
+                  src={sectionImages.quality}
+                  alt="Smooth premium gypsum wall finish"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="p-4">
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
-                  <Leaf className="h-7 w-7 text-accent" />
+                  <Leaf className="h-9 w-9 text-blue-800" />
                 </div>
-                <h3 className="text-lg font-semibold mb-3  text-blue-800">100% Premium Quality</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="text-xl font-semibold mb-3  text-orange-500">100% Premium Quality</h3>
+                <p className="text-muted-foreground text-[18px] leading-relaxed">
                   We use only the finest materials meeting all industry standards for superior durability.
                 </p>
               </div>
 
-              <div className="p-4 bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
-                  <img
-                    src={sectionImages.support}
-                    alt="Commercial construction support team on site"
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-                <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
-                  <Truck className="h-7 w-7 text-accent" />
-                </div>
-                <h3 className="text-lg font-semibold mb-3  text-blue-800">24/7 Support</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Our dedicated team is always available when you need us, ensuring seamless project delivery.
-                </p>
-              </div>
+            </div>
 
-              <div className="p-4 bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
-                  <img
-                    src={sectionImages.excellence}
-                    alt="Modern ceiling installation with precise finishing"
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
+            <div className="bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                <img
+                  src={sectionImages.support}
+                  alt="Commercial construction support team on site"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="p-4">           <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
+                <Truck className="h-9 w-9 text-blue-800" />
+              </div>
+                <h3 className="text-xl font-semibold mb-3  text-orange-500">24/7 Support</h3>
+                <p className="text-muted-foreground text-[18px] leading-relaxed">
+                  Our dedicated team is always available when you need us, ensuring seamless project delivery.
+                </p></div>
+
+            </div>
+
+            <div className="bg-card rounded-lg bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="mb-6 h-44 overflow-hidden rounded-md bg-muted">
+                <img
+                  src={sectionImages.excellence}
+                  alt="Modern ceiling installation with precise finishing"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className='p-4'>
                 <div className="flex items-center justify-center w-14 h-14 rounded bg-accent/10 mb-6">
-                  <Award className="h-7 w-7 text-accent" />
+                  <Award className="h-9 w-9 text-blue-800" />
                 </div>
-                <h3 className="text-lg font-semibold mb-3  text-blue-800">Trusted Excellence</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="text-xl font-semibold mb-3  text-orange-500">Trusted Excellence</h3>
+                <p className="text-muted-foreground text-[18px] leading-relaxed">
                   Industry-leading standards and proven expertise ensuring exceptional results every time.
                 </p>
               </div>
+
             </div>
           </div>
+        </div>
         </section>
 
         {/* Benefits Section */}
@@ -215,7 +222,7 @@ export default function HomePage() {
                     <Zap className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Time Saving</h3>
-                  <p className="text-white/90 text-sm">Faster construction with minimal labour requirements</p>
+                  <p className="text-white/90 TEXT-[15px]">Faster construction with minimal labour requirements</p>
                 </div>
               </div>
 
@@ -227,7 +234,7 @@ export default function HomePage() {
                     <Droplet className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Less Wastage</h3>
-                  <p className="text-white/90 text-sm">Significantly lower waste compared to traditional methods</p>
+                  <p className="text-white/90 TEXT-[15px]">Significantly lower waste compared to traditional methods</p>
                 </div>
               </div>
 
@@ -239,21 +246,22 @@ export default function HomePage() {
                     <Shield className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">High Durability</h3>
-                  <p className="text-white/90 text-sm">Enhanced fire, moisture and impact resistance</p>
+                  <p className="text-white/90 TEXT-[15px]">Enhanced fire, moisture and impact resistance</p>
                 </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="relative overflow-hidden rounded-lg  opacity-0 animate-fadeInUp" style={{ animationDelay: '0.4s', animationFillMode: 'forwards', minHeight: '300px' }}>
-                <img src="https://images.unsplash.com/photo-1576021160550-112173f7f869?w=500&h=300&fit=crop&q=80" alt="Eco-Friendly" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1913&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sound Control" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Leaf className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Eco-Friendly</h3>
-                  <p className="text-white/90 text-sm">Non-toxic and environmentally sustainable products</p>
+                  <p className="text-white/90 TEXT-[15px]">Non-toxic and environmentally sustainable products</p>
                 </div>
               </div>
 
@@ -265,19 +273,20 @@ export default function HomePage() {
                     <Clock className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Cost Effective</h3>
-                  <p className="text-white/90 text-sm">Superior value with reduced construction expenses</p>
+                  <p className="text-white/90 TEXT-[15px]">Superior value with reduced construction expenses</p>
                 </div>
               </div>
 
               <div className="relative overflow-hidden rounded-lg  opacity-0 animate-fadeInUp" style={{ animationDelay: '0.6s', animationFillMode: 'forwards', minHeight: '300px' }}>
-                <img src="https://images.unsplash.com/photo-1565182409498-7207267562da?w=500&h=300&fit=crop&q=80" alt="Sound Control" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+                <img src="https://images.unsplash.com/photo-1531104985437-603d6490e6d4?q=80&w=2039&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Eco-Friendly" className="absolute inset-0 w-full h-full object-cover  hover:scale-110 transition-transform duration-500" />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
                   <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-accent/90 mb-4">
                     <Volume2 className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white">Sound Control</h3>
-                  <p className="text-white/90 text-sm">Superior acoustic insulation for peaceful spaces</p>
+                  <p className="text-white/90 TEXT-[15px]">Superior acoustic insulation for peaceful spaces</p>
                 </div>
               </div>
             </div>
@@ -304,7 +313,7 @@ export default function HomePage() {
                   {services.map((service, index) => (
                     <div
                       key={service.id}
-                      className="overflow-hidden rounded-lg  bg-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-0 animate-fadeInUp"
+                      className="overflow-hidden rounded-lg  bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 opacity-0 animate-fadeInUp"
                       style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards' }}
                     >
                       <div className="h-56 bg-muted overflow-hidden relative">
@@ -315,9 +324,9 @@ export default function HomePage() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                       </div>
-                      <div className="p-6">
+                      <div className="p-6 bg-white">
                         <h3 className="text-lg font-semibold mb-2 text-blue-800">{service.title}</h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed text-white">
+                        <p className="text-muted-foreground TEXT-[15px] leading-relaxed text-black ">
                           {service.description}
                         </p>
                       </div>
@@ -325,7 +334,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <Link href="/services">
-                  <Button variant="outline" className="transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:border-accent">
+                  <Button className="transition-all duration-300 bg-white hover:bg-accent hover:text-white">
                     Explore All Products
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -456,9 +465,9 @@ export default function HomePage() {
                   <div className="p-6">
                     <span className="text-xs font-semibold text-accent uppercase tracking-widest">{caseStudy.category}</span>
                     <h3 className="text-lg font-bold mt-2 mb-2 text-foreground">{caseStudy.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{caseStudy.description}</p>
+                    <p className="TEXT-[15px] text-muted-foreground leading-relaxed mb-4">{caseStudy.description}</p>
                     <div className="border-t border-border pt-4 mt-4">
-                      <p className="text-sm font-semibold text-accent">{caseStudy.result}</p>
+                      <p className="TEXT-[15px] font-semibold text-accent">{caseStudy.result}</p>
                     </div>
                   </div>
                 </div>
@@ -517,7 +526,7 @@ export default function HomePage() {
                   <p className="text-muted-foreground italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
                   <div>
                     <p className="font-semibold text-foreground">{testimonial.author}</p>
-                    <p className="text-sm text-accent">{testimonial.role}</p>
+                    <p className="TEXT-[15px] text-accent">{testimonial.role}</p>
                   </div>
                 </div>
               ))}
@@ -544,22 +553,56 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 rounded-lg">
               {[
-                { name: 'Residential', description: 'Homes and apartments' },
-                { name: 'Commercial', description: 'Office and retail spaces' },
-                { name: 'Hospitality', description: 'Hotels and resorts' },
-                { name: 'Healthcare', description: 'Medical facilities' },
-                { name: 'Education', description: 'Schools and universities' },
-                { name: 'Industrial', description: 'Manufacturing facilities' },
-                { name: 'Renovation', description: 'Building upgrades' },
-                { name: 'New Construction', description: 'Ground-up projects' }
+                { name: 'Residential', description: 'Premium gypsum plastering solutions for villas, apartments, independent houses, and modern residential interiors with smooth and durable wall finishes.' },
+
+                { name: 'Commercial', description: 'Professional plastering services for offices, showrooms, retail outlets, and commercial buildings with clean finishing and timely project execution.' },
+
+                { name: 'Hospitality', description: 'Elegant wall and ceiling plastering services for hotels, resorts, restaurants, and luxury hospitality spaces designed for aesthetic appeal and durability.' },
+
+                { name: 'Healthcare', description: 'High-quality gypsum plastering for hospitals, clinics, laboratories, and healthcare facilities with smooth, hygienic, and maintenance-friendly finishes.' },
+
+                { name: 'Education', description: 'Reliable plastering solutions for schools, colleges, universities, and educational institutions ensuring strong, neat, and long-lasting interiors.' },
+
+                { name: 'Industrial', description: 'Durable and efficient gypsum plastering services for factories, warehouses, industrial units, and manufacturing facilities with quality workmanship.' },
+
+                { name: 'Renovation', description: 'Complete wall renovation and re-plastering services to upgrade old spaces with modern, smooth, crack-free, and ready-to-paint finishes.' },
+
+                { name: 'New Construction', description: 'End-to-end gypsum plastering solutions for newly constructed residential and commercial projects with precision, speed, and superior quality.' }
               ].map((industry, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-orange-500 hover:shadow-lg transition-all duration-300 transform rounded-lg hover:-translate-y-1 text-center opacity-0 animate-fadeInUp rounded-lg"
+                  className="bg-white border border-orange-100 hover:shadow-[0_10px_30px_rgba(249,115,22,0.25)] transition-all duration-300 transform hover:-translate-y-1 text-center opacity-0 animate-fadeInUp rounded-lg overflow-hidden flex flex-col justify-start min-h-[300px]"
                   style={{ animationDelay: `${0.1 + index * 0.05}s`, animationFillMode: 'forwards' }}
                 >
-                  <h3 className="font-semibold  mb-2 text-white">{industry.name}</h3>
-                  <p className="text-sm text-muted-foreground text-white">{industry.description}</p>
+                  <div className="relative w-full h-40 sm:h-48 overflow-hidden">
+                    <img
+                      src={serviceImageFallbacks[index % serviceImageFallbacks.length]}
+                      alt={`${industry.name} image`}
+                      className="w-full h-full object-cover block"
+                    />
+
+                    {/* Blue Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-blue-600/30 to-transparent" />
+                  </div>
+
+                  <div className="p-6 text-left flex flex-col flex-grow">
+                    <h3 className="font-bold text-[25px] mb-3 text-blue-800">
+                      {industry.name}
+                    </h3>
+
+                    <p className="text-[15px] leading-6 text-gray-700 flex-grow">
+                      {industry.description}
+                    </p>
+
+                    <Link
+                      href="/about"
+                      className="mt-6 inline-flex items-center gap-2 TEXT-[15px] font-semibold text-blue-800 transition-all duration-300 hover:text-orange-500 group"
+                    >
+                      Learn More
+
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
@@ -567,7 +610,7 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-20 sm:py-32 bg-background">
+        {/* <section className="py-20 sm:py-32 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-[0.85fr_1.15fr] md:items-center">
               <div className="h-64 overflow-hidden rounded-lg bg-muted">
@@ -601,7 +644,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA Section */}
         <section className="py-24 sm:py-32 bg-primary text-primary-foreground relative overflow-hidden">

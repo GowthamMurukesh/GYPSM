@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-
+{/* <section className="py-20 sm:py-32 bg-[linear-gradient(135deg,_#52E5E7_10%,_#130CB7_100%)]"></section> */}
   return (
     <footer className="bg-background bg-blue-800 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
