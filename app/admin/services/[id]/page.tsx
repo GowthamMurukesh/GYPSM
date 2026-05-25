@@ -10,11 +10,12 @@ import { Service } from '@/lib/types';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { saveService } from '@/lib/firebaseUtils';
-import { storage } from '@/lib/firebase';
 import { convertImageFileToWebP } from '@/lib/mediaUtils';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ArrowLeft, ImagePlus, Save } from 'lucide-react';
 import Link from 'next/link';
+
+const CLOUDINARY_CLOUD_NAME = 'dakhek75d';
+const CLOUDINARY_UPLOAD_PRESET = 'Gowtham';
 
 const defaultService: Omit<Service, 'id' | 'createdAt' | 'updatedAt'> = {
   title: '',
@@ -114,13 +115,36 @@ export default function ServiceEditor() {
   const handleImageUpload = async (file: File | undefined) => {
     if (!file) return;
 
+    if (isViewer) {
+      setError('Viewer access is read-only.');
+      return;
+    }
+
     setSaving(true);
     setError(null);
+
     try {
+      // Convert to WebP first (same as MediaPage pattern)
       const webpFile = await convertImageFileToWebP(file);
-      const fileRef = ref(storage, `services/${Date.now()}-${webpFile.name}`);
-      await uploadBytes(fileRef, webpFile, { contentType: 'image/webp' });
-      const url = await getDownloadURL(fileRef);
+
+      const formData = new FormData();
+      formData.append('file', webpFile);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: 'POST', body: formData }
+      );
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData?.error?.message || 'Cloudinary upload failed');
+      }
+
+      const data = await response.json();
+      const url: string = data.secure_url;
+
       setService((prev) => ({ ...prev, image: url }));
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error uploading image';
@@ -221,7 +245,7 @@ export default function ServiceEditor() {
           />
           <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
             <ImagePlus className="h-3 w-3" />
-            Uploaded images are converted to WebP and stored in Firebase.
+            Uploaded images are converted to WebP and stored via Cloudinary.
           </p>
           {service.image && (
             <Button

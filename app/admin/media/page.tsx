@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { getMediaItems, saveMediaItem, deleteMediaItem } from '@/lib/firebaseUtils';
 import { MediaItem } from '@/lib/types';
 import { useAuthStore } from '@/lib/authStore';
-import { storage } from '@/lib/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Upload, Trash2, Image as ImageIcon, Video, AlertCircle } from 'lucide-react';
 import { getYouTubeEmbedUrl, isYouTubeUrl } from '@/lib/mediaUtils';
+
+const CLOUDINARY_CLOUD_NAME = 'dakhek75d';
+const CLOUDINARY_UPLOAD_PRESET = 'Gowtham';
 
 export default function MediaPage() {
   const { userProfile, loading: authLoading } = useAuthStore();
@@ -25,7 +26,6 @@ export default function MediaPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Wait for auth to load before fetching media
     if (!authLoading) {
       fetchMedia();
     }
@@ -78,9 +78,7 @@ export default function MediaPage() {
     if (invalidFiles.length > 0) {
       setMessage(`❌ Only WebP files are allowed. Invalid files: ${invalidFiles.join(', ')}`);
       setMessageType('error');
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
 
@@ -100,14 +98,26 @@ export default function MediaPage() {
         const file = validFiles[i];
 
         try {
-          console.log(`Uploading WebP file: ${file.name}`);
-          const fileRef = ref(storage, `media/${Date.now()}-${file.name}`);
-          
-          await uploadBytes(fileRef, file, { contentType: 'image/webp' });
-          console.log(`Upload complete, getting download URL...`);
-          
-          const url = await getDownloadURL(fileRef);
-          console.log(`Download URL obtained: ${url}`);
+          console.log(`Uploading to Cloudinary: ${file.name}`);
+
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+          formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+          const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+            { method: 'POST', body: formData }
+          );
+
+          if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData?.error?.message || 'Cloudinary upload failed');
+          }
+
+          const data = await response.json();
+          const url: string = data.secure_url;
+          console.log(`Cloudinary URL: ${url}`);
 
           const mediaItem: Omit<MediaItem, 'id'> = {
             filename: file.name,
@@ -119,7 +129,6 @@ export default function MediaPage() {
             tags: [],
           };
 
-          console.log(`Saving media item to Firestore...`);
           await saveMediaItem(mediaItem);
           console.log(`Media item saved successfully`);
           uploadedCount++;
@@ -129,9 +138,8 @@ export default function MediaPage() {
         }
       }
 
-      // Refresh media list
       await fetchMedia();
-      
+
       if (uploadedCount > 0) {
         setMessage(`✅ Successfully uploaded ${uploadedCount} image${uploadedCount > 1 ? 's' : ''}${failedCount > 0 ? ` (${failedCount} failed)` : ''}`);
         setMessageType('success');
@@ -146,9 +154,7 @@ export default function MediaPage() {
       setMessageType('error');
     } finally {
       setUploading(false);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -219,8 +225,8 @@ export default function MediaPage() {
 
       {message && (
         <Card className={`p-4 text-sm border flex items-center gap-3 ${
-          messageType === 'error' 
-            ? 'border-red-300 bg-red-50 text-red-900' 
+          messageType === 'error'
+            ? 'border-red-300 bg-red-50 text-red-900'
             : messageType === 'success'
             ? 'border-green-300 bg-green-50 text-green-900'
             : 'border-accent/30 bg-accent/5'
@@ -321,15 +327,15 @@ export default function MediaPage() {
 
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   {!isViewer && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleDelete(item.id)}
-                    className="bg-white"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleDelete(item.id)}
+                      className="bg-white"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
 

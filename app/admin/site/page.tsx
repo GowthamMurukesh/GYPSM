@@ -9,10 +9,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/lib/authStore';
 import type { SiteContent } from '@/lib/types';
 import { defaultSiteContent } from '@/lib/siteDefaults';
-import { storage } from '@/lib/firebase';
 import { convertImageFileToWebP } from '@/lib/mediaUtils';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ImagePlus, Save } from 'lucide-react';
+
+const CLOUDINARY_CLOUD_NAME = 'dakhek75d';
+const CLOUDINARY_UPLOAD_PRESET = 'Gowtham';
 
 export default function SiteEditorPage() {
   const { userProfile } = useAuthStore();
@@ -62,11 +63,27 @@ export default function SiteEditorPage() {
 
   const uid = userProfile?.id || 'unknown';
 
-  async function uploadSectionImage(file: File, folder: string): Promise<string> {
+  // Replaced Firebase Storage with Cloudinary — same pattern as MediaPage
+  async function uploadSectionImage(file: File): Promise<string> {
     const webpFile = await convertImageFileToWebP(file);
-    const fileRef = ref(storage, `site/${folder}/${Date.now()}-${webpFile.name}`);
-    await uploadBytes(fileRef, webpFile, { contentType: 'image/webp' });
-    return getDownloadURL(fileRef);
+
+    const formData = new FormData();
+    formData.append('file', webpFile);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      { method: 'POST', body: formData }
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData?.error?.message || 'Cloudinary upload failed');
+    }
+
+    const data = await response.json();
+    return data.secure_url as string;
   }
 
   async function handleHeroImageUpload(
@@ -78,7 +95,7 @@ export default function SiteEditorPage() {
     setSaving(true);
     setMessage(null);
     try {
-      const url = await uploadSectionImage(file, section);
+      const url = await uploadSectionImage(file);
       setSite((s) => ({
         ...s,
         [section]: {
@@ -86,7 +103,7 @@ export default function SiteEditorPage() {
           heroImage: url,
         },
       }));
-      setMessage('Image uploaded as WebP. Save this section to publish it.');
+      setMessage('Image uploaded. Save this section to publish it.');
     } catch (e) {
       setMessage(e instanceof Error ? e.message : 'Image upload failed');
     } finally {
@@ -100,7 +117,7 @@ export default function SiteEditorPage() {
     try {
       const { saveSiteSection } = await import('@/lib/firebaseUtils');
       await saveSiteSection('home', site.home, uid);
-      setMessage('Home section saved to Firebase.');
+      setMessage('Home section saved.');
     } catch (e) {
       setMessage(e instanceof Error ? e.message : 'Save failed');
     } finally {
@@ -232,8 +249,7 @@ export default function SiteEditorPage() {
                 disabled={isViewer || saving}
               />
             </div>
-            <Field label="“Why choose” heading" value={site.home.whyTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whyTitle: v } }))} disabled={isViewer || saving} />
-            <Field
+      <Field label="“Why choose” heading" value={site.home.whyTitle} onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whyTitle: v } }))} disabled={isViewer || saving} />            <Field
               label="“Why choose” subtitle"
               value={site.home.whySubtitle}
               onChange={(v) => setSite((s) => ({ ...s, home: { ...s.home, whySubtitle: v } }))}
@@ -539,7 +555,7 @@ function ImageField({
       </div>
       <p className="text-xs text-muted-foreground flex items-center gap-1">
         <ImagePlus className="h-3 w-3" />
-        Uploaded images are converted to WebP.
+        Uploaded images are converted to WebP and stored via Cloudinary.
       </p>
     </div>
   );

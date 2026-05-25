@@ -259,21 +259,22 @@ export function Footer() {
             <div className="rg-footer-contact-item">
               <div className="rg-footer-contact-icon"><Phone size={14} /></div>
               <div className="rg-footer-contact-text">
-                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                <a href="tel:+1234567890">+91 6235322307</a>
               </div>
             </div>
 
             <div className="rg-footer-contact-item">
               <div className="rg-footer-contact-icon"><Mail size={14} /></div>
               <div className="rg-footer-contact-text">
-                <a href="mailto:info@royalgypsum.com">info@royalgypsum.com</a>
+                <a href="mailto:info@royalgypsum.com">enterpriseamna@gmail.com
+</a>
               </div>
             </div>
 
             <div className="rg-footer-contact-item">
               <div className="rg-footer-contact-icon"><MapPin size={14} /></div>
               <div className="rg-footer-contact-text">
-                123 Business St,<br />City, State 12345
+                AM Building,Court Road Manjeri<br /> Kerala 676127
               </div>
             </div>
           </div>
