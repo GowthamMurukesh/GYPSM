@@ -259,7 +259,7 @@ export function Footer() {
             <div className="rg-footer-contact-item">
               <div className="rg-footer-contact-icon"><Phone size={14} /></div>
               <div className="rg-footer-contact-text">
-                <a href="tel:+1234567890">+91 6235322307</a>
+                <a href="tel:+1234567890">+91 8891822307</a>
               </div>
             </div>
 
